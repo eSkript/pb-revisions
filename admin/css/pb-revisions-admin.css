@@ -1,0 +1,60 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+ .pb_rev_diff_col{
+
+ }
+
+ .pb_rev_diff_col__added{
+    background-color: #13BB0088;
+ }
+
+ .pb_rev_diff_col__removed{
+    background-color: #BB002888;
+ }
+
+ .pb_rev_diff_cell{
+
+ }
+
+ .pb_rev_diff_cell__added{
+    background-color: #13BB0088;
+ }
+
+ .pb_rev_diff_table__added .pb_rev_diff_cell__added, .pb_rev_diff_table__added .pb_rev_diff_cell__removed, .pb_rev_diff_table__removed .pb_rev_diff_cell__added, .pb_rev_diff_table__removed .pb_rev_diff_cell__removed{
+    background: transparent;
+ }
+
+ .pb_rev_diff_cell__removed{
+    background-color: #BB002888;
+ }
+
+ .pb_rev_diff_cell__changed{
+     
+ }
+
+ .pb_rev_diff_cell__context{
+     text-align: center;
+     background-color: #EEE;
+ }
+
+ .pb_rev_diff_cell__changed ins{
+    background-color: #13BB0088;
+    text-decoration: none;
+ }
+
+ .pb_rev_diff_cell__changed del{
+    background-color: #BB002888;
+    text-decoration: none;
+ }
+
+ .pb_rev_diff_editor_cell{
+
+ }
+ 
+ .pb_rev_diff_editor_cell__to_much{
+     background-color:  #bb0028;
+     color: #ffffff !important;
+ }
