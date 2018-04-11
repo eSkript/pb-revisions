@@ -108,7 +108,7 @@ class Text_Diff_Renderer_Table extends \WP_Text_Diff_Renderer_Table {
 	 * @return string
 	 */
 	public function contextLine( $line ) {
-		return "<td class='pb_rev_diff_cell pb_rev_diff_cell__context'>{$line}</td>";
+		return "<td colspan='2' class='pb_rev_diff_cell pb_rev_diff_cell__context'>{$line}</td>";
 	}
 
 	/**
@@ -204,7 +204,7 @@ class Text_Diff_Renderer_Table extends \WP_Text_Diff_Renderer_Table {
 				/** This filter is documented in wp-includes/wp-diff.php */
 				$line = apply_filters( 'process_text_diff_html', $processed_line, $line, 'unchanged' );
 			}
-			$r .= '<tr colspan="2">' . $this->contextLine( $line )  . "<td></td></tr>\n";
+			$r .= '<tr>' . $this->contextLine( $line )  . "<td></td></tr>\n";
 		}
 		return $r;
 	}
