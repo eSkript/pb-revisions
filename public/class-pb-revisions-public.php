@@ -52,6 +52,7 @@ class Pb_Revisions_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		self::register_tables();
+		$this->add_shortcodes();
 	}
 
 	/**
@@ -98,6 +99,52 @@ class Pb_Revisions_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/pb-revisions-public.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	/**
+	 * Register shortcodes
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_shortcodes() {
+		add_shortcode( 'version', array( $this, 'handle_version_shortcode') );
+		add_shortcode( 'publish-date', array( $this, 'handle_publish_date_shortcode') );
+	}
+
+	/**
+	 * Handle Version Shortcode
+	 *
+	 * @since    1.0.0
+	 */
+	public function handle_version_shortcode($atts) {
+		$a = shortcode_atts( array(
+			'working_version_title' => "Working Version" //TODO
+		), $atts );
+
+		$store = new \PBRevisions\includes\Store();
+		$v = $store->get_active_version_number();
+		if(!empty($v)){
+			return esc_html( $v );
+		}else{
+			return esc_html( $a['working_version_title'] );
+		}
+	}
+
+	/**
+	 * Handle Publish Date Shortcode
+	 *
+	 * @since    1.0.0
+	 */
+	public function handle_publish_date_shortcode() {
+		$store = new \PBRevisions\includes\Store();
+		$v = $store->get_active_version();
+		if(!empty($v)){
+			$date = $v->date;
+		}else{
+			$date = current_time( 'mysql', 1 );
+		}
+		$date_format = get_option( 'date_format' );
+		return get_date_from_gmt($date, $date_format);
 	}
 
 	/**
