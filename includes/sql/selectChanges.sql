@@ -10,8 +10,8 @@ CREATE TEMPORARY TABLE t1
         SELECT
             chapter.*,
             COALESCE(chapter.menu_order_new, chapter.menu_order_old) AS menu_order,
-            IF(COALESCE(chapter.post_type_new, chapter.post_type_old) LIKE "front-matter", 0,
-                IF(COALESCE(chapter.post_type_new, chapter.post_type_old) LIKE "back-matter", 999999999,
+            IF(COALESCE(chapter.post_type_new, chapter.post_type_old) = "front-matter", 0,
+                IF(COALESCE(chapter.post_type_new, chapter.post_type_old) = "back-matter", 999999999,
                     part.menu_order
                 )
             ) AS part_menu_order
@@ -60,7 +60,7 @@ CREATE TEMPORARY TABLE t1
                                 SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type, m.meta_value AS pb_export
                                 FROM {$posts} AS p
                                 LEFT JOIN {$postmeta} AS m
-                                ON p.ID = m.post_id AND m.meta_key LIKE 'pb_export'
+                                ON p.ID = m.post_id AND m.meta_key = 'pb_export'
                                 WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private")
                             ) AS new
                         LEFT JOIN
@@ -68,7 +68,7 @@ CREATE TEMPORARY TABLE t1
                                 SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type, m.meta_value AS pb_export
                                 FROM {$posts_prev} AS p
                                 LEFT JOIN {$postmeta_prev} AS m
-                                ON p.ID = m.post_id AND m.meta_key LIKE 'pb_export'
+                                ON p.ID = m.post_id AND m.meta_key = 'pb_export'
                                 WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private")
                             )AS old
                         USING (ID)
@@ -95,7 +95,7 @@ CREATE TEMPORARY TABLE t1
                                 SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type, m.meta_value AS pb_export
                                 FROM {$posts} AS p
                                 LEFT JOIN {$postmeta} AS m
-                                ON p.ID = m.post_id AND m.meta_key LIKE 'pb_export'
+                                ON p.ID = m.post_id AND m.meta_key = 'pb_export'
                                 WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private")
                             ) AS new
                         RIGHT JOIN
@@ -103,7 +103,7 @@ CREATE TEMPORARY TABLE t1
                                 SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type, m.meta_value AS pb_export
                                 FROM {$posts_prev} AS p
                                 LEFT JOIN {$postmeta_prev} AS m
-                                ON p.ID = m.post_id AND m.meta_key LIKE 'pb_export'
+                                ON p.ID = m.post_id AND m.meta_key = 'pb_export'
                                 WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private")
                             )AS old
                         USING (ID)
@@ -117,17 +117,17 @@ CREATE TEMPORARY TABLE t1
                 ON cont.ID = com.chapter
                 WHERE 
                     revisions_chapter_ID IS NOT NULL
-                    OR post_content_new NOT LIKE post_content_old
+                    OR post_content_new != post_content_old
                     OR (post_content_new IS NULL AND post_content_old IS NOT NULL)
                     OR (post_content_new IS NOT NULL AND post_content_old IS NULL)
-                    OR post_title_new NOT LIKE post_title_old
+                    OR post_title_new != post_title_old
                     OR (post_title_new IS NULL AND post_title_old IS NOT NULL)
                     OR (post_title_new IS NOT NULL AND post_title_old IS NULL)
-                    OR post_status_new NOT LIKE post_status_old
+                    OR post_status_new != post_status_old
                     OR (post_status_new IS NULL AND post_status_new IS NOT NULL)
                     OR (post_status_new IS NOT NULL AND post_status_new IS NULL)
-                    OR (pb_export_new LIKE 'on' AND pb_export_old NOT LIKE 'on')
-                    OR (pb_export_new NOT LIKE 'on' AND pb_export_old LIKE 'on')
+                    OR (pb_export_new = 'on' AND pb_export_old != 'on')
+                    OR (pb_export_new != 'on' AND pb_export_old = 'on')
             ) as chapter
         LEFT JOIN
             (
@@ -135,7 +135,7 @@ CREATE TEMPORARY TABLE t1
                 FROM {$posts} AS new
                 LEFT JOIN {$posts_prev} AS old
                 USING (ID)
-                WHERE new.post_type LIKE "part" AND new.post_status LIKE "publish")
+                WHERE new.post_type = "part" AND new.post_status = "publish")
 
                 UNION
 
@@ -143,7 +143,7 @@ CREATE TEMPORARY TABLE t1
                 FROM {$posts} AS new
                 RIGHT JOIN {$posts_prev} AS old
                 USING (ID)
-                WHERE old.post_type LIKE "part" AND old.post_status LIKE "publish")
+                WHERE old.post_type = "part" AND old.post_status = "publish")
             ) as part
         ON chapter.post_parent = part.ID
         ORDER BY part_menu_order, menu_order
