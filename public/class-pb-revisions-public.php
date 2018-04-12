@@ -52,7 +52,6 @@ class Pb_Revisions_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		self::register_tables();
-		$this->add_shortcodes();
 	}
 
 	/**
@@ -102,6 +101,44 @@ class Pb_Revisions_Public {
 	}
 
 	/**
+	 * Add endpoints
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_endpoints() {
+		add_rewrite_endpoint( 'revisions', EP_ROOT );//TODO flush_rewrite_rules but where
+	}
+
+	/**
+	 * Register query_vars
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_query_vars( $query_vars ){
+		$query_vars[] = 'revisions';
+		return $query_vars;
+	}
+
+	/**
+	 * Handle Revisions Detail Page
+	 *
+	 * @since    1.0.0
+	 */
+	public function handle_revisions_detail_page( &$wp ){
+		if ( array_key_exists( 'revisions', $wp->query_vars ) ) {
+			if (locate_template( array( 'revisions-page.php' ) ) != '') {
+				// yep, load the page template
+				get_template_part('revisions-page');
+			} else {
+				// nope, load the content
+				require( plugin_dir_path( __FILE__ ) . 'partials/revisions-page.php' );
+			}
+			exit();
+		}
+		return;
+	}
+
+	/**
 	 * Register shortcodes
 	 *
 	 * @since    1.0.0
@@ -109,6 +146,7 @@ class Pb_Revisions_Public {
 	public function add_shortcodes() {
 		add_shortcode( 'version', array( $this, 'handle_version_shortcode') );
 		add_shortcode( 'publish-date', array( $this, 'handle_publish_date_shortcode') );
+		add_shortcode( 'revisions', array( $this, 'handle_revisions_shortcode') );
 	}
 
 	/**
@@ -145,6 +183,23 @@ class Pb_Revisions_Public {
 		}
 		$date_format = get_option( 'date_format' );
 		return get_date_from_gmt($date, $date_format);
+	}
+
+	/**
+	 * Handle Revisions Shortcode
+	 *
+	 * @since    1.0.0
+	 */
+	public function handle_revisions_shortcode() {
+		ob_start();
+			if (locate_template( array( 'revisions-shortcode.php' ) ) != '') {
+				// yep, load the page template
+				get_template_part('revisions-shortcode');
+			} else {
+				// nope, load the content
+				require( plugin_dir_path( __FILE__ ) . 'partials/revisions-shortcode.php' );
+			}
+		return ob_get_clean();
 	}
 
 	/**

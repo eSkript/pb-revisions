@@ -66,17 +66,28 @@ class Store {
 	 */
 	public function get_versions_up_to($version_number) {
 		global $wpdb;
-		$versions = $wpdb->get_results(
-			$wpdb->prepare(
+		if(empty($version_number)){
+			$versions = $wpdb->get_results(
 				"
 				SELECT * 
 				FROM $wpdb->pb_revisions_version
-				WHERE ID <= (SELECT ID FROM $wpdb->pb_revisions_version WHERE number LIKE %s)
+				WHERE draft != 1
 				ORDER BY ID;
-				",
-				$version_number
-			)
-		);
+				"
+			);
+		}else{
+			$versions = $wpdb->get_results(
+				$wpdb->prepare(
+					"
+					SELECT * 
+					FROM $wpdb->pb_revisions_version
+					WHERE ID <= (SELECT ID FROM $wpdb->pb_revisions_version WHERE number LIKE %s)
+					ORDER BY ID;
+					",
+					$version_number
+				)
+			);
+		}
 		$prev_number = null;
 		return array_map(function($version) use (&$prev_number){
 			$out = new \PBRevisions\includes\models\Version($version->author, $version->ID, $version->date, $version->number, $prev_number, $version->type, boolval($version->draft), $version->comment);

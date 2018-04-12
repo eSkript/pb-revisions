@@ -173,7 +173,10 @@ class Pb_Revisions {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'query_vars', $plugin_public, 'add_query_vars' );
+		$this->loader->add_action( 'parse_request', $plugin_public, 'handle_revisions_detail_page' );
+		$this->loader->add_action( 'init', $plugin_public, 'add_endpoints' );
+		$this->loader->add_action( 'init', $plugin_public, 'add_shortcodes' );
 	}
 
 	/**

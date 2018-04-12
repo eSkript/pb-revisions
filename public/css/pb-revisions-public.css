@@ -1,4 +1,42 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
+.pb_revisions_version {
+    padding: 25px;
+    background: #eee;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.pb_revisions_version h2{
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+.pb_revisions_version h3{
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+.pb_revisions_version__date{
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    font-size: 80%;
+}
+
+.pb_revisions_version__summary{
+    border-bottom: 1px solid;
+    margin-bottom: 25px;
+}
+
+.pb_revisions_version__chapters{
+    column-count: 2;
+    column-gap: 25px;
+}
+
+.pb_revisions_version__chapter{
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid-column;
+}
+
+.pb_revisions_version__chapter p{
+    font-size: 80%
+}
