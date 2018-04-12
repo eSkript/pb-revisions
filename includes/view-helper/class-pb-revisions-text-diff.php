@@ -171,7 +171,7 @@ class Text_Diff {
 
         if($old == $new){
             foreach($right_lines as $line){
-                echo "<tr><td class='pb_rev_diff_cell pb_rev_diff_cell__context' colspan='2'>{$line}</td><td></td></tr>";
+                echo "<tr><td class='pb_rev_diff_cell pb_rev_diff_cell__context' colspan='2'>".htmlspecialchars($line)."</td><td></td></tr>";
             }
         }
 
