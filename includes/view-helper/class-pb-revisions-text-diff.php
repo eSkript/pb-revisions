@@ -170,13 +170,9 @@ class Text_Diff {
         $right_lines = explode("\n", $right_string);
 
         if($left_string == $right_string){
-            echo '<tr>';
-
             foreach($right_lines as $line){
-                echo "<td class='pb_rev_diff_cell pb_rev_diff_cell__context' colspan='2'>{$line}</td><td></td>";
+                echo "<tr><td class='pb_rev_diff_cell pb_rev_diff_cell__context' colspan='2'>{$line}</td><td></td></tr>";
             }
-
-            echo '</tr>';
         }
 
         if ( ! class_exists( 'WP_Text_Diff_Renderer_Table', false ) )

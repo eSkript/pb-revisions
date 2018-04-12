@@ -77,6 +77,7 @@ class Text_Diff_Renderer_Table extends \WP_Text_Diff_Renderer_Table {
 	 */
 	public function changedLine( $line ) {
 		return "<td class='pb_rev_diff_cell pb_rev_diff_cell__changed'>{$line}</td>";
+
 	}
 
 	/**
@@ -86,7 +87,7 @@ class Text_Diff_Renderer_Table extends \WP_Text_Diff_Renderer_Table {
 	 * @return string
 	 */
 	public function addedLine( $line ) {
-		return "<tr><td class='pb_rev_diff_cell'>&nbsp;</td><td class='pb_rev_diff_cell pb_rev_diff_cell__added'>{$line}</td>".$this->editor()."</tr>\n";
+		return "<td class='pb_rev_diff_cell pb_rev_diff_cell__added'>{$line}</td>";
 
 	}
 
@@ -97,7 +98,7 @@ class Text_Diff_Renderer_Table extends \WP_Text_Diff_Renderer_Table {
 	 * @return string
 	 */
 	public function deletedLine( $line ) {
-		return "<tr><td class='pb_rev_diff_cell pb_rev_diff_cell__removed'>{$line}</td><td class='pb_rev_diff_cell'>&nbsp;</td>".$this->editor()."</tr>\n";
+		return "<td class='pb_rev_diff_cell pb_rev_diff_cell__removed'>{$line}</td>";
 	}
 
 	/**
@@ -107,7 +108,7 @@ class Text_Diff_Renderer_Table extends \WP_Text_Diff_Renderer_Table {
 	 * @return string
 	 */
 	public function contextLine( $line ) {
-		return "<tr><td colspan='2' class='pb_rev_diff_cell pb_rev_diff_cell__context'>{$line}</td><td></td></tr>\n";
+		return "<td colspan='2' class='pb_rev_diff_cell pb_rev_diff_cell__context'>{$line}</td>";
 	}
 
 	/**
@@ -161,7 +162,7 @@ class Text_Diff_Renderer_Table extends \WP_Text_Diff_Renderer_Table {
 				 */
 				$line = apply_filters( 'process_text_diff_html', $processed_line, $line, 'added' );
 			}
-			$r .= $this->addedLine( $line );
+			$r .= '<tr>' . $this->emptyLine() . $this->addedLine( $line ) .$this->editor()."</tr>\n";
 		}
 		return $r;
 	}
@@ -182,7 +183,7 @@ class Text_Diff_Renderer_Table extends \WP_Text_Diff_Renderer_Table {
 				/** This filter is documented in wp-includes/wp-diff.php */
 				$line = apply_filters( 'process_text_diff_html', $processed_line, $line, 'deleted' );
 			}
-			$r .= $this->deletedLine( $line );
+			$r .= '<tr>' . $this->deletedLine( $line ) .  $this->emptyLine().$this->editor()."</tr>\n";
 		}
 		return $r;
 	}
@@ -203,7 +204,7 @@ class Text_Diff_Renderer_Table extends \WP_Text_Diff_Renderer_Table {
 				/** This filter is documented in wp-includes/wp-diff.php */
 				$line = apply_filters( 'process_text_diff_html', $processed_line, $line, 'unchanged' );
 			}
-			$r .= $this->contextLine( $line );
+			$r .= '<tr>' . $this->contextLine( $line )  . "<td></td></tr>\n";
 		}
 		return $r;
 	}
@@ -292,7 +293,7 @@ class Text_Diff_Renderer_Table extends \WP_Text_Diff_Renderer_Table {
 			} elseif ( $final_rows[ $row ] < 0 || empty($final_line) ) { // Final is blank. This is really a deleted row.
 				$r .= $this->_deleted( array( $orig_line ), false );
 			} elseif ( $total ) { // A true changed row.
-				$r .= '<tr><td class="pb_rev_diff_cell pb_rev_diff_cell__removed">'.$orig_line.'</td><td class="pb_rev_diff_cell pb_rev_diff_cell__added">'.$final_line.'</td>' .$this->editor()."</tr>\n";
+				$r .= '<tr>' . $this->deletedLine( $orig_line ) . $this->addedLine( $final_line ) .$this->editor()."</tr>\n";
 			} else { // A true changed row.
 				$r .= '<tr>' . $this->changedLine( $orig_line ) . $this->changedLine( $final_line ) .$this->editor()."</tr>\n";
 			}
