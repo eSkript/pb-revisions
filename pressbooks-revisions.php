@@ -37,6 +37,9 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'PB_REVISIONS_VERSION', '1.0.0' );
 
+$role = get_role( 'administrator' );
+$role->add_cap( 'activate_plugins' );
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-pb-revisions-activator.php
