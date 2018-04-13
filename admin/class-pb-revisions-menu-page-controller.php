@@ -165,7 +165,7 @@ class Menu_Page_Controller {
 	public function action_create_version() {
         if(isset($_POST['pb_revisions_type']) && ($_POST['pb_revisions_type'] == 'major' || $_POST['pb_revisions_type'] == 'minor' ||$_POST['pb_revisions_type'] == 'patch')){
 			$draft = $this->store->get_draft_version();
-			if(!isset($draft)){
+			if(empty($draft)){
 				$last_version = $this->store->get_last_version();
 				$v = new \PBRevisions\includes\models\Version(get_current_user_id());
 				$v->set_number_by_last($last_version->number, $_POST['pb_revisions_type']);
