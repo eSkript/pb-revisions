@@ -203,6 +203,33 @@ class Pb_Revisions_Public {
 	}
 
 	/**
+	 * Change Tables
+	 *
+	 * @since    1.0.0
+	 */
+	public function change_tables() {
+		$this->switch_to_right_table_names();
+	}
+
+	/**
+	 * Change Tables Back if Preview
+	 *
+	 * @since    1.0.0
+	 */
+	public function change_tables_back() {
+		$this->switch_to_right_table_names();
+	}
+
+	/**
+	 * Blog switched
+	 *
+	 * @since    1.0.0
+	 */
+	public function blog_switched($id) {
+		$this->switch_to_right_table_names();
+	}
+
+	/**
 	 * Register Tables
 	 *
 	 * @since    1.0.0
@@ -222,6 +249,39 @@ class Pb_Revisions_Public {
 		}
 		
 		
+	}
+
+	/**
+	 * Should a Revisioned Version be shown
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @return	boolean
+	 */
+	private function show_revisioned_version(){
+		global $wp;
+		if(is_admin()) return false;
+		if(isset($wp) && array_key_exists( 'preview', $wp->query_vars ) && current_user_can( "edit_posts" )) return false;
+		return true;
+	}
+
+	/**
+	 * Switch to right table names
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @return	boolean
+	 */
+	private function switch_to_right_table_names(){
+		global $wpdb;
+		$store = new \PBRevisions\includes\Store();
+		if($this->show_revisioned_version()){
+			$v = $store->get_active_version_number();
+		}else{
+			$v = false;
+		}
+		$wpdb->posts = esc_sql($store->posts_table_name($v));
+		$wpdb->postmeta = esc_sql($store->postmeta_table_name($v));
 	}
 
 }

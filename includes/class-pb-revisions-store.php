@@ -598,6 +598,38 @@ class Store {
 	public function save_active_export_version($version) {
         $this->save_active_export_version_number($version->number);
 	}
+
+	/**
+	 * Get the posts table name
+	 *
+	 * @since    1.0.0
+	 * @param	string	The version number         
+	 * @return	string	The posts table name
+	 */
+	public function posts_table_name($version=false) {
+		global $wpdb;
+		if(!empty($version)){
+			return $wpdb->prefix.'posts_v'.str_replace(".", "_", $version);
+		}else{
+			return $wpdb->prefix.'posts';
+		}
+	}
+	
+	/**
+	 * Get the postmeta table name
+	 *
+	 * @since    1.0.0
+	 * @param	string	The version number         
+	 * @return	string	The postmeta table name
+	 */
+	public function postmeta_table_name($version=false) {
+		global $wpdb;
+		if(!empty($version)){
+			return $wpdb->prefix.'postmeta_v'.str_replace(".", "_", $version);
+		}else{
+			return $wpdb->prefix.'postmeta';
+		}
+    }
 	
 	/**
 	 * Replace strings for chapter tables in SQL
@@ -611,14 +643,14 @@ class Store {
 	private function replace_chapter_tables_strings($sql, $version) {
 		global $wpdb;
         if($version->draft){
-			$posts = $wpdb->prefix.'posts';
-			$postmeta = $wpdb->prefix.'postmeta';
+			$posts = $this->posts_table_name();
+			$postmeta = $this->postmeta_table_name();
 		}else{
-			$posts = $wpdb->prefix.'posts_v'.str_replace(".", "_", $version->number);
-			$postmeta = $wpdb->prefix.'postmeta_v'.str_replace(".", "_", $version->number);
+			$posts = $this->posts_table_name($version->number);
+			$postmeta = $this->postmeta_table_name($version->number);
 		}
-		$posts_prev = $wpdb->prefix.'posts_v'.str_replace(".", "_", $version->prev_number);
-		$postmeta_prev = $wpdb->prefix.'postmeta_v'.str_replace(".", "_", $version->prev_number);
+		$posts_prev = $this->posts_table_name($version->prev_number);
+		$postmeta_prev = $this->postmeta_table_name($version->prev_number);
 
 		$vars_chapter = array(
 			'{$posts}' 		=> $posts,

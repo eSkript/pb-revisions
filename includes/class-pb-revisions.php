@@ -176,6 +176,9 @@ class Pb_Revisions {
 		$this->loader->add_action( 'parse_request', $plugin_public, 'handle_revisions_detail_page' );
 		$this->loader->add_action( 'init', $plugin_public, 'add_endpoints' );
 		$this->loader->add_action( 'init', $plugin_public, 'add_shortcodes' );
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'change_tables' );
+		$this->loader->add_action( 'parse_request', $plugin_public, 'change_tables_back' );
+		$this->loader->add_action( 'switch_blog', $plugin_public, 'blog_switched' );
 	}
 
 	/**
