@@ -181,6 +181,7 @@ class Pb_Revisions {
 		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'change_tables' );
 		$this->loader->add_action( 'parse_request', $plugin_public, 'change_tables_back' );
 		$this->loader->add_action( 'switch_blog', $plugin_public, 'blog_switched' );
+		$this->loader->add_filter( 'pb_get_export_folder', $plugin_public, 'get_export_folder' );
 	}
 
 	/**

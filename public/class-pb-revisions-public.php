@@ -180,7 +180,7 @@ class Pb_Revisions_Public {
 	 */
 	public function handle_publish_date_shortcode() {
 		$store = new \PBRevisions\includes\Store();
-		
+
 		if($this->is_export()){
 			$v = $store->get_active_export_version();
 		}else{
@@ -238,6 +238,37 @@ class Pb_Revisions_Public {
 	 */
 	public function blog_switched($id) {
 		$this->switch_to_right_table_names();
+	}
+
+	/**
+	 * Get Export Folder
+	 * 
+	 * Overriedes the getExportFolder Function of Pressbooks Export Class
+	 *
+	 * @since    1.0.0
+	 */
+	public function get_export_folder($path) {
+		if($this->show_revisioned_version()){
+			$store = new \PBRevisions\includes\Store();
+			if($this->is_export()){
+				$v = $store->get_active_export_version_number();
+			}else{
+				$v = $store->get_active_version_number();
+			}
+			if(!empty($v)){
+				$path .= $v.'/';
+				if ( ! file_exists( $path ) ) {
+					mkdir( $path, 0775, true );
+				}
+		
+				$path_to_htaccess = $path . '.htaccess';
+				if ( ! file_exists( $path_to_htaccess ) ) {
+					// Restrict access
+					file_put_contents( $path_to_htaccess, "deny from all\n" );
+				}
+			}
+		}
+		return $path;
 	}
 
 	/**
