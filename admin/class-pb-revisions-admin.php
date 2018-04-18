@@ -122,4 +122,45 @@ class Pb_Revisions_Admin {
 		$controller->render();
 	}
 
+	/**
+	 * Add version selecter UI to export page
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function add_version_selecter_ui(){
+		$store = new \PBRevisions\includes\Store();
+		$versions = $store->get_versions();
+		$active_version = $store->get_active_export_version_number();
+		echo '<div class="clear"></div>';
+		echo '<h3>Version</h3>';
+		echo '<p>Select which version you want to export</p>';
+		echo '<div class="clear">';
+		echo '<select name="pb_revisions_version">';
+		echo '<option value="working">Working Version</option>';
+		foreach(array_reverse($versions) as $version){
+			if(!$version->draft){
+				$selected = $active_version==$version->number ? ' selected' : '';
+				echo '<option value="'.$version->ID.'"'.$selected.'>'.$version->number.'</option>';
+			}
+		}
+	  	echo '</select>';
+		echo '</div>';
+	}
+
+	/**
+	 * Change Export Version When Exporting
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function change_export_version_when_exporting(){
+		if(isset($_GET['export']) && $_GET['export'] == "yes" && isset($_POST['pb_revisions_version'])){
+			$controller = new \PBRevisions\admin\Menu_Page_Controller();
+			if($controller->allowed()){
+				$controller->action_activate_export_version();
+			}
+		}
+	}
+
 }

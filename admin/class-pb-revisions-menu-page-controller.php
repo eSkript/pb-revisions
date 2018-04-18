@@ -458,10 +458,10 @@ class Menu_Page_Controller {
 	 * Does the user have the rights to view the revisions section?
 	 *
 	 * @since    1.0.0
-	 * @access   private
+	 * @access   public
      * @return  boolean  If okay
 	 */
-	private function allowed() {
+	public function allowed() {
 		return current_user_can('edit_posts');
 	}
 

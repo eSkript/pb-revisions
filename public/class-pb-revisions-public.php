@@ -260,8 +260,8 @@ class Pb_Revisions_Public {
 	 */
 	private function show_revisioned_version(){
 		global $wp;
-		if(is_admin()) return false;
-		if(isset($wp) && array_key_exists( 'preview', $wp->query_vars ) && current_user_can( "edit_posts" )) return false;
+		if(is_admin() && !isset($_POST['export_formats'])) return false;
+		if(isset($wp) && is_array($wp->query_vars) && array_key_exists( 'preview', $wp->query_vars ) && current_user_can( "edit_posts" )) return false;
 		return true;
 	}
 
@@ -276,12 +276,34 @@ class Pb_Revisions_Public {
 		global $wpdb;
 		$store = new \PBRevisions\includes\Store();
 		if($this->show_revisioned_version()){
-			$v = $store->get_active_version_number();
+			global $wp;
+			if($this->is_export()){
+				$v = $store->get_active_export_version_number();
+			}else{
+				$v = $store->get_active_version_number();
+			}
 		}else{
 			$v = false;
 		}
 		$wpdb->posts = esc_sql($store->posts_table_name($v));
 		$wpdb->postmeta = esc_sql($store->postmeta_table_name($v));
+	}
+
+	/**
+	 * Is Export
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @return	boolean
+	 */
+	private function is_export(){
+		if(is_admin() && isset($_POST['export_formats']) && current_user_can( "edit_posts" )) return true;
+		global $wp;
+		$exporter = new \Pressbooks\Modules\Export\WordPress\Wxr(array());
+		$timestamp = absint( @$_REQUEST['timestamp'] );
+		$hashkey = @$_REQUEST['hashkey'];
+		if(isset($wp) && is_array($wp->query_vars) && array_key_exists( 'format', $wp->query_vars ) && $this->verifyNonce( $timestamp, $hashkey )) return true;
+		return false;
 	}
 
 }
