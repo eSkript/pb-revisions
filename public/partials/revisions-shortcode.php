@@ -3,8 +3,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 $store = new \PBRevisions\includes\Store();
-$version_number = $store->get_active_version_number();
-$versions = $store->get_versions_with_chapters_up_to($store->get_active_version_number());
+if(isset($_POST['export_formats']) || array_key_exists( 'format', $GLOBALS['wp_query']->query_vars )){
+    $version_number = $store->get_active_export_version_number();
+}else{
+    $version_number = $store->get_active_version_number();
+}
+
+$versions = $store->get_versions_with_chapters_up_to($version_number);
 $date_format = get_option( 'date_format' );
 
 function pb_revision_the_content($content){

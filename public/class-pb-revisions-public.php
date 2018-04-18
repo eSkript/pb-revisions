@@ -160,7 +160,12 @@ class Pb_Revisions_Public {
 		), $atts );
 
 		$store = new \PBRevisions\includes\Store();
-		$v = $store->get_active_version_number();
+		if($this->is_export()){
+			$v = $store->get_active_export_version_number();
+		}else{
+			$v = $store->get_active_version_number();
+		}
+		
 		if(!empty($v)){
 			return esc_html( $v );
 		}else{
@@ -175,7 +180,13 @@ class Pb_Revisions_Public {
 	 */
 	public function handle_publish_date_shortcode() {
 		$store = new \PBRevisions\includes\Store();
-		$v = $store->get_active_version();
+		
+		if($this->is_export()){
+			$v = $store->get_active_export_version();
+		}else{
+			$v = $store->get_active_version();
+		}
+
 		if(!empty($v)){
 			$date = $v->date;
 		}else{
