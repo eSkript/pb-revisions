@@ -8,8 +8,7 @@ $date_format = get_option( 'date_format' );
 <div class="wrap">
 <h1>Revisions</h1>
 <p>
-	<span class="dashicons dashicons-admin-site"></span> Current Web Version: <?php echo $data['active_version'] ? $data['active_version']->number : "Working Version";?>  
-	| <span class="dashicons dashicons-migrate"></span> Current Export Version: <?php echo $data['active_export_version'] ? $data['active_export_version']->number : "Working Version";?>
+	<span class="dashicons dashicons-admin-site"></span> Current Web Version: <?php echo $data['active_version'] ? $data['active_version']->number : "Working Version";?>
 </p>
 <table class="wp-list-table widefat fixed" cellspacing="0">
 	<thead>
@@ -18,7 +17,6 @@ $date_format = get_option( 'date_format' );
 			<th>Version</th>
 			<th>Author</th>
 			<th>Web</th>
-			<th>Export</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -38,16 +36,6 @@ $date_format = get_option( 'date_format' );
 						</form>
 					<?php }?>
 				</td>
-				<td>
-					<?php if($data['active_export_version'] == $version) {?>
-						Active
-					<?php }else if(!$version->draft){?>
-						<form action="<?php echo $form_url ?>" method="POST">
-							<input type="hidden" name="pb_revisions_version" value="<?php echo $version->ID?>">
-							<button type="submit" class="button generate" name="pb_revisions_action" value="activate_export_version">Activate</button>
-						</form>
-					<?php }?>
-				</td>
 				<td class="action column-action">
 					<?php if($version->number != '1.0.0') {
 								$version_id = $version->ID;
@@ -62,34 +50,6 @@ $date_format = get_option( 'date_format' );
 				</td>
 			</tr>
 		<?php endforeach; ?>
-		<tr>
-				<td></td>
-				<td>Working Version</td>
-				<td></td>
-				<td>
-					<?php if(!$data['active_version']) {?>
-						Active
-					<?php }else{?>
-						<form action="<?php echo $form_url ?>" method="POST">
-							<input type="hidden" name="pb_revisions_version" value="working">
-							<button type="submit" class="button generate" name="pb_revisions_action" value="activate_version">Activate</button>
-						</form>
-					<?php }?>
-				</td>
-				<td>
-					<?php if(!$data['active_export_version']) {?>
-						Active
-					<?php }else{?>
-						<form action="<?php echo $form_url ?>" method="POST">
-							<input type="hidden" name="pb_revisions_version" value="working">
-							<button type="submit" class="button generate" name="pb_revisions_action" value="activate_export_version">Activate</button>
-						</form>
-					<?php }?>
-				</td>
-				<td class="action column-action">
-					
-				</td>
-			</tr>
 	</tbody>
 </table>
 <?php if($data['has_draft']) {
@@ -100,6 +60,6 @@ $date_format = get_option( 'date_format' );
 <?php }else{
 	$create_version_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=create_version" );
 ?>
-	<a class="button button-hero button-primary generate" href=<?php echo $create_version_url;?>>Add Version</a>
+	<a class="button button-hero button-primary generate" href=<?php echo $create_version_url;?>>Create Version from Current State</a>
 <?php }?>
 </div>
