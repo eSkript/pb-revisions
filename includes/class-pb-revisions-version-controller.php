@@ -100,7 +100,7 @@ class Version_Controller {
 	public static function can_user_see_working_version(){
 		global $post;
 		return (current_user_can( "edit_posts" ) || 
-					(is_single() && 
+					( 
 					 isset($post) &&
 					 current_user_can('edit_post', $post->ID)
 					)
