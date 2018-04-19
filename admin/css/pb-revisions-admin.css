@@ -100,3 +100,14 @@
     width: 17px;
     height: 17px;
 }
+.version_table__active_version td {
+    background-color: #777777;
+}
+
+.version_table__active_version td {
+    color: #fff;
+}
+
+.inline_form{
+    display: inline;
+}
