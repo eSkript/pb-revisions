@@ -163,4 +163,15 @@ class Pb_Revisions_Admin {
 		}
 	}
 
+	/**
+	 * Show Files in Export
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function pb_export_show_files(){
+		require( plugin_dir_path( __FILE__ ) . 'partials/pb-revisions-export-file-section.php' );
+		return false;
+	}
+
 }

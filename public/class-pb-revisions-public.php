@@ -250,7 +250,11 @@ class Pb_Revisions_Public {
 	public function get_export_folder($path) {
 		if($this->show_revisioned_version()){
 			$store = new \PBRevisions\includes\Store();
-			if($this->is_export()){
+			if($this->is_export_download()){
+				$v = sanitize_file_name( $_GET['download_export_version'] );
+			}else if($this->is_export_deletion()){
+				$v = sanitize_file_name( $_POST['delete_export_version'] );
+			}else if($this->is_export()){
 				$v = $store->get_active_export_version_number();
 			}else{
 				$v = $store->get_active_version_number();
@@ -302,7 +306,10 @@ class Pb_Revisions_Public {
 	 */
 	private function show_revisioned_version(){
 		global $wp;
-		if(is_admin() && !isset($_POST['export_formats'])) return false;
+		if(is_admin() && isset($_POST['export_formats'])) return true;
+		if($this->is_export_download()) return true;
+		if($this->is_export_deletion()) return true;
+		if(is_admin()) return false;
 		if(isset($wp) && is_array($wp->query_vars) && array_key_exists( 'preview', $wp->query_vars ) && current_user_can( "edit_posts" )) return false;
 		return true;
 	}
@@ -344,8 +351,40 @@ class Pb_Revisions_Public {
 		$exporter = new \Pressbooks\Modules\Export\WordPress\Wxr(array());
 		$timestamp = absint( @$_REQUEST['timestamp'] );
 		$hashkey = @$_REQUEST['hashkey'];
-		if(isset($wp) && is_array($wp->query_vars) && array_key_exists( 'format', $wp->query_vars ) && $this->verifyNonce( $timestamp, $hashkey )) return true;
+		if(isset($wp) && is_array($wp->query_vars) && array_key_exists( 'format', $wp->query_vars ) && $exporter->verifyNonce( $timestamp, $hashkey )) return true;
 		return false;
+	}
+
+	/**
+	 * Is Export Download in Admin
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @return	boolean
+	 */
+	private function is_export_download(){
+		return (is_admin() &&
+		   isset($_GET['page']) &&
+		   $_GET['page'] == "pb_export" &&
+		   ! empty( $_GET['download_export_file'] ) &&
+		   isset($_GET['download_export_version']) &&
+		   current_user_can( "edit_posts" ));
+	}
+
+	/**
+	 * Is Export Deletion
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @return	boolean
+	 */
+	private function is_export_deletion(){
+		return (is_admin() &&
+		   isset($_GET['page']) &&
+		   $_GET['page'] == "pb_export" &&
+		   isset( $_POST['delete_export_file'] ) &&
+		   isset($_POST['delete_export_version']) &&
+		   current_user_can( "edit_posts" ));
 	}
 
 }

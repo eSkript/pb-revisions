@@ -159,6 +159,7 @@ class Pb_Revisions {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu');
 		$this->loader->add_action('pb_export_form_end', $plugin_admin, 'add_version_selecter_ui');
 		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'change_export_version_when_exporting', 9 );
+		$this->loader->add_filter( 'pb_export_show_files', $plugin_admin, 'pb_export_show_files' );
 	}
 
 	/**
