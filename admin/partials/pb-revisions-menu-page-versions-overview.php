@@ -7,6 +7,7 @@ $date_format = get_option( 'date_format' );
 ?>
 <div class="wrap">
 <h1>Revisions</h1>
+<?php do_action( 'admin_notices' );?>
 <p>
 	<span class="dashicons dashicons-admin-site"></span> Current Web Version: <?php echo $data['active_version'] ? $data['active_version']->number : "Working Version";?>
 </p>

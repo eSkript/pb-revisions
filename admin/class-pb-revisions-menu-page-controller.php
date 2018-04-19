@@ -141,6 +141,7 @@ class Menu_Page_Controller {
 			$this->store->publish_version($v1);
 			$this->store->save_active_version($v1);
 			$this->store->save_active_export_version($v1);
+			add_action( 'admin_notices', array($this, 'version_published_admin_notice__success') );
 		}
 	}
 
@@ -206,6 +207,7 @@ class Menu_Page_Controller {
 				$this->store->publish_version($version);
 				$this->store->save_active_version($version);
 				$this->store->save_active_export_version($version);
+				add_action( 'admin_notices', array($this, 'version_published_admin_notice__success') );
 			}
 		}
 		//TODO Error
@@ -223,6 +225,7 @@ class Menu_Page_Controller {
 				$this->store->publish_version($version);
 				$this->store->save_active_version($version);
 				$this->store->save_active_export_version($version);
+				add_action( 'admin_notices', array($this, 'version_published_admin_notice__success') );
 			}
 		}
 		//TODO Error
@@ -465,4 +468,18 @@ class Menu_Page_Controller {
 		return current_user_can('edit_posts');
 	}
 
+
+	/**
+	 * Version Published Notice
+	 *
+	 * @since    1.0.0
+	 * @access   public
+     * @return  boolean  If okay
+	 */
+	function version_published_admin_notice__success() {
+		echo '
+		<div class="notice notice-success is-dismissible">
+			<p>The Version is published! Don\'t forget to <a href="'.get_admin_url( get_current_blog_id(), '/admin.php?page=pb_export').'">export</a> it.</p>
+		</div>';
+	}
 }
