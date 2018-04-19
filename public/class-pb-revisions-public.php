@@ -84,19 +84,27 @@ class Pb_Revisions_Public {
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Pb_Revisions_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Pb_Revisions_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/pb-revisions-public.js', array( 'jquery' ), $this->version, false );
+
+		//Working Version Button
+		if(\PBRevisions\includes\Version_Controller::can_user_see_working_version()){
+            wp_register_script( $this->plugin_name."_button", plugin_dir_url( __FILE__ ) . 'js/button.js', array( 'jquery' ), $this->version, false );
+            $value_array = array(
+                //'some_string' => __( 'Some string to translate', 'plugin-domain' ),
+                'is_on' => get_user_meta( get_current_user_id(), "pb_revisions_show_working_version", true ) || get_query_var("preview", false),
+                'hide_url' => add_query_arg( array(
+                    'pb_revisions_hide_working_version' => true,
+					'pb_revisions_show_working_version' => false,
+					'preview' => false,
+                ), $_SERVER['REQUEST_URI'] ),
+                'show_url' => add_query_arg( array(
+                    'pb_revisions_hide_working_version' => false,
+                    'pb_revisions_show_working_version' => true,
+                ), $_SERVER['REQUEST_URI'] )
+            );
+            wp_localize_script( $this->plugin_name."_button", 'PBRevisionsButton', $value_array );
+            wp_enqueue_script( $this->plugin_name."_button" );
+        }
 
 	}
 
@@ -116,6 +124,8 @@ class Pb_Revisions_Public {
 	 */
 	public function add_query_vars( $query_vars ){
 		$query_vars[] = 'revisions';
+		$query_vars[] = "pb_revisions_show_working_version";
+        $query_vars[] = "pb_revisions_hide_working_version";
 		return $query_vars;
 	}
 
@@ -139,6 +149,24 @@ class Pb_Revisions_Public {
 	}
 
 	/**
+     * Changing the user setting if the working version is shown or not
+	 * 
+	 * @since    1.0.0
+     */
+    public function change_show_working_version(){ 
+        if(is_user_logged_in()){
+            if(get_query_var('pb_revisions_show_working_version', false )){
+				update_user_meta(get_current_user_id(), "pb_revisions_show_working_version", true);
+				$this->switch_to_right_table_names();
+            }
+            if(get_query_var('pb_revisions_hide_working_version', false )){
+				update_user_meta(get_current_user_id(), "pb_revisions_show_working_version", false);
+				$this->switch_to_right_table_names();
+            }
+        }
+    }
+
+	/**
 	 * Register shortcodes
 	 *
 	 * @since    1.0.0
@@ -159,12 +187,7 @@ class Pb_Revisions_Public {
 			'working_version_title' => "Working Version" //TODO
 		), $atts );
 
-		$store = new \PBRevisions\includes\Store();
-		if($this->is_export()){
-			$v = $store->get_active_export_version_number();
-		}else{
-			$v = $store->get_active_version_number();
-		}
+		$v = \PBRevisions\includes\Version_Controller::version_to_show();
 		
 		if(!empty($v)){
 			return esc_html( $v );
@@ -181,11 +204,13 @@ class Pb_Revisions_Public {
 	public function handle_publish_date_shortcode() {
 		$store = new \PBRevisions\includes\Store();
 
-		if($this->is_export()){
-			$v = $store->get_active_export_version();
+		$vn = \PBRevisions\includes\Version_Controller::version_to_show();
+		if(!empty($vn)){
+			$v = $store->get_version_by_number($vn);
 		}else{
-			$v = $store->get_active_version();
+			$v = false;
 		}
+		
 
 		if(!empty($v)){
 			$date = $v->date;
@@ -248,13 +273,13 @@ class Pb_Revisions_Public {
 	 * @since    1.0.0
 	 */
 	public function get_export_folder($path) {
-		if($this->show_revisioned_version()){
+		if(\PBRevisions\includes\Version_Controller::show_revisioned_version()){
 			$store = new \PBRevisions\includes\Store();
-			if($this->is_export_download()){
+			if(\PBRevisions\includes\Version_Controller::is_export_download()){
 				$v = sanitize_file_name( $_GET['download_export_version'] );
-			}else if($this->is_export_deletion()){
+			}else if(\PBRevisions\includes\Version_Controller::is_export_deletion()){
 				$v = sanitize_file_name( $_POST['delete_export_version'] );
-			}else if($this->is_export()){
+			}else if(\PBRevisions\includes\Version_Controller::is_export()){
 				$v = $store->get_active_export_version_number();
 			}else{
 				$v = $store->get_active_version_number();
@@ -298,23 +323,6 @@ class Pb_Revisions_Public {
 	}
 
 	/**
-	 * Should a Revisioned Version be shown
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @return	boolean
-	 */
-	private function show_revisioned_version(){
-		global $wp;
-		if(is_admin() && isset($_POST['export_formats'])) return true;
-		if($this->is_export_download()) return true;
-		if($this->is_export_deletion()) return true;
-		if(is_admin()) return false;
-		if(isset($wp) && is_array($wp->query_vars) && array_key_exists( 'preview', $wp->query_vars ) && current_user_can( "edit_posts" )) return false;
-		return true;
-	}
-
-	/**
 	 * Switch to right table names
 	 *
 	 * @since    1.0.0
@@ -324,67 +332,8 @@ class Pb_Revisions_Public {
 	private function switch_to_right_table_names(){
 		global $wpdb;
 		$store = new \PBRevisions\includes\Store();
-		if($this->show_revisioned_version()){
-			global $wp;
-			if($this->is_export()){
-				$v = $store->get_active_export_version_number();
-			}else{
-				$v = $store->get_active_version_number();
-			}
-		}else{
-			$v = false;
-		}
+		$v = \PBRevisions\includes\Version_Controller::version_to_show();
 		$wpdb->posts = esc_sql($store->posts_table_name($v));
 		$wpdb->postmeta = esc_sql($store->postmeta_table_name($v));
 	}
-
-	/**
-	 * Is Export
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @return	boolean
-	 */
-	private function is_export(){
-		if(is_admin() && isset($_POST['export_formats']) && current_user_can( "edit_posts" )) return true;
-		global $wp;
-		$exporter = new \Pressbooks\Modules\Export\WordPress\Wxr(array());
-		$timestamp = absint( @$_REQUEST['timestamp'] );
-		$hashkey = @$_REQUEST['hashkey'];
-		if(isset($wp) && is_array($wp->query_vars) && array_key_exists( 'format', $wp->query_vars ) && $exporter->verifyNonce( $timestamp, $hashkey )) return true;
-		return false;
-	}
-
-	/**
-	 * Is Export Download in Admin
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @return	boolean
-	 */
-	private function is_export_download(){
-		return (is_admin() &&
-		   isset($_GET['page']) &&
-		   $_GET['page'] == "pb_export" &&
-		   ! empty( $_GET['download_export_file'] ) &&
-		   isset($_GET['download_export_version']) &&
-		   current_user_can( "edit_posts" ));
-	}
-
-	/**
-	 * Is Export Deletion
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @return	boolean
-	 */
-	private function is_export_deletion(){
-		return (is_admin() &&
-		   isset($_GET['page']) &&
-		   $_GET['page'] == "pb_export" &&
-		   isset( $_POST['delete_export_file'] ) &&
-		   isset($_POST['delete_export_version']) &&
-		   current_user_can( "edit_posts" ));
-	}
-
 }
