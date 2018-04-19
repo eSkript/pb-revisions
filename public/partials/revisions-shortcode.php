@@ -16,7 +16,7 @@ function pb_revision_the_content($content){
 <?php foreach ( array_reverse($versions) as $version ) : ?>
     <section class="pb_revisions_version">
         <h2>Version <?php echo $version->number?></h2>
-        <div class="pb_revisions_version__date"><?php echo get_date_from_gmt($version->date, $date_format); ?></div>
+        <div class="pb_revisions_version__date"><?php echo $version->draft ? "Draft" : get_date_from_gmt($version->date, $date_format); ?></div>
         <?php if(!empty($version->comment)){?>
             <div class="pb_revisions_version__summary">
                 <?php pb_revision_the_content($version->comment)?>

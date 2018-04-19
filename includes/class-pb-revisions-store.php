@@ -71,7 +71,6 @@ class Store {
 				"
 				SELECT * 
 				FROM $wpdb->pb_revisions_version
-				WHERE draft != 1
 				ORDER BY ID;
 				"
 			);
