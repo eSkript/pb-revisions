@@ -81,6 +81,11 @@ class Export {
      * @return array
      */
     static function latest_exports_of_version($dir) {
+
+        if ( ! file_exists( $dir ) ) {
+            return array();
+        }
+        
         /**
          * @since 1.0.0
          * Add custom export formats to the latest exports filetype mapping array.
