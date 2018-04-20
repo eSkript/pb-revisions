@@ -98,8 +98,8 @@ class Text_Diff {
 	 */
 	public function render_line($old, $new) {
 
-        $old  = htmlspecialchars(normalize_whitespace($old));
-        $new = htmlspecialchars(normalize_whitespace($new));
+        $old  = wp_kses_post(normalize_whitespace($old));
+        $new = wp_kses_post(normalize_whitespace($new));
 
         if($this->chapter_added){
             echo "<td class=\"pb_rev_diff_cell\"></td>";
@@ -171,7 +171,7 @@ class Text_Diff {
 
         if($old == $new){
             foreach($right_lines as $line){
-                echo "<tr><td class='pb_rev_diff_cell pb_rev_diff_cell__context' colspan='2'>".htmlspecialchars($line)."</td><td></td></tr>";
+                echo "<tr><td class='pb_rev_diff_cell pb_rev_diff_cell__context' colspan='2'>".wp_kses_post($line)."</td><td></td></tr>";
             }
         }
 
@@ -180,7 +180,7 @@ class Text_Diff {
 
         $text_diff = new \Text_Diff($left_lines, $right_lines);
         $renderer  = new Text_Diff_Renderer_Table(array(), $this->editors_content, $this->editors_name, $this->editors_settings );
-        echo $renderer->render($text_diff);
+        echo wp_kses_post($renderer->render($text_diff));
         $editor_number = $renderer->editor_number;
         if(is_array($this->editors_content)){
             $r_content_a = array_filter($this->editors_content, function($k) use ($editor_number) {
@@ -191,7 +191,7 @@ class Text_Diff {
                 echo '<tr><td></td><td></td><td class="pb_rev_diff_editor_cell pb_rev_diff_editor_cell__to_much">';
                 echo '<span class="dashicons dashicons-warning"></span> These comments are not associated with any paragraph. Please move them to the right place.';
                 wp_editor($r_content , $this->editors_name."-r", $this->editors_settings );
-                echo "<input type='hidden' name='{$this->editors_name}-r-orig' value='".htmlspecialchars($r_content)."'";
+                echo "<input type='hidden' name='".esc_attr($this->editors_name."-r-orig")."' value='".esc_attr($r_content)."'";
                 echo '</td></tr>';
             }
         }

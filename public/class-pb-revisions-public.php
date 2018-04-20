@@ -92,15 +92,15 @@ class Pb_Revisions_Public {
             $value_array = array(
                 //'some_string' => __( 'Some string to translate', 'plugin-domain' ),
                 'is_on' => get_user_meta( get_current_user_id(), "pb_revisions_show_working_version", true ) || get_query_var("preview", false),
-                'hide_url' => add_query_arg( array(
+                'hide_url' => esc_url(add_query_arg( array(
                     'pb_revisions_hide_working_version' => true,
 					'pb_revisions_show_working_version' => false,
 					'preview' => false,
-                ), $_SERVER['REQUEST_URI'] ),
-                'show_url' => add_query_arg( array(
+                ), $_SERVER['REQUEST_URI'] )),
+                'show_url' => esc_url(add_query_arg( array(
                     'pb_revisions_hide_working_version' => false,
                     'pb_revisions_show_working_version' => true,
-                ), $_SERVER['REQUEST_URI'] )
+                ), $_SERVER['REQUEST_URI'] ))
             );
             wp_localize_script( $this->plugin_name."_button", 'PBRevisionsButton', $value_array );
             wp_enqueue_script( $this->plugin_name."_button" );

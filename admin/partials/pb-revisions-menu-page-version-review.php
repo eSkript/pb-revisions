@@ -8,17 +8,17 @@ $chapter_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisio
 $draft = $data['version']->draft;
 function pb_revision_the_content($content){
 	$content = apply_filters( 'the_content', $content );
-    echo str_replace( ']]>', ']]&gt;', $content );
+    echo wp_kses_post(str_replace( ']]>', ']]&gt;', $content ));
 }
 ?>
 <div class="wrap">
-	<form action="<?php echo $form_url ?>" method="POST">
-		<input type="hidden" name="pb_revisions_version" value="<?php echo $data['version']->ID?>">
-		<h1>Version <?php echo $data['version']->number?> Review</h1>
-		<h2>Summary <a href="<?php echo $summary_url?>">Edit</a></h2>
+	<form action="<?php echo esc_url($form_url) ?>" method="POST">
+		<input type="hidden" name="pb_revisions_version" value="<?php echo esc_attr($data['version']->ID)?>">
+		<h1>Version <?php echo esc_html($data['version']->number)?> Review</h1>
+		<h2>Summary <a href="<?php echo esc_url($summary_url)?>">Edit</a></h2>
 		<?php pb_revision_the_content($data['version']->comment)?>
 		<?php foreach ( $data['chapters'] as $chapter ) : ?>
-			<h3>Chapter: <?php echo $chapter->title()?> <a href="<?php echo $chapter_url.$chapter->chapter?>">Edit</a></h3>
+			<h3>Chapter: <?php echo esc_html($chapter->title())?> <a href="<?php echo esc_url($chapter_url.$chapter->chapter)?>">Edit</a></h3>
 			<?php pb_revision_the_content($chapter->title_comment)?>
 			<?php foreach ( $chapter->comments as $comment ) : ?>
 				<?php pb_revision_the_content($comment)?>

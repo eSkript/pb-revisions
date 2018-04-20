@@ -187,7 +187,7 @@ class Menu_Page_Controller {
         if(isset($_POST['pb_revisions_version']) && isset($_POST['pb_revisions_comment'])){
 			$version = $this->store->get_version($_POST['pb_revisions_version']);
 			if(isset($version)){
-				$version->comment = $_POST['pb_revisions_comment'];
+				$version->comment = wp_unslash($_POST['pb_revisions_comment']);
 				$this->store->save_version($version);
 			}
 		}
@@ -203,7 +203,7 @@ class Menu_Page_Controller {
         if(isset($_POST['pb_revisions_version']) && isset($_POST['pb_revisions_comment'])){
 			$version = $this->store->get_version($_POST['pb_revisions_version']);
 			if(isset($version) && $version->draft){
-				$version->comment = wp_kses_post(stripslashes($_POST['pb_revisions_comment']));
+				$version->comment = wp_unslash($_POST['pb_revisions_comment']);
 				$this->store->publish_version($version);
 				$this->store->save_active_version($version);
 				$this->store->save_active_export_version($version);
@@ -280,7 +280,7 @@ class Menu_Page_Controller {
 			}
 		}
 
-		if(!$force && $_POST['pb_revisions_title_comment'] == $chapter->title_comment){
+		if(!$force && wp_unslash($_POST['pb_revisions_title_comment']) == $chapter->title_comment){
 			if(!isset($_POST['pb_revisions_comments-r']) || !isset($_POST['pb_revisions_comments-r-orig'])){
 				if($new_comments == $chapter->comments)
 					return;
@@ -300,8 +300,8 @@ class Menu_Page_Controller {
 		}
 
 		if(!empty($_POST['pb_revisions_title_comment']) || !empty($new_comments)){
-			$chapter->comments = array_map ( 'wp_kses_post' , $new_comments );
-			$chapter->title_comment = wp_kses_post($_POST['pb_revisions_title_comment']);
+			$chapter->comments = wp_unslash($new_comments);
+			$chapter->title_comment = wp_unslash($_POST['pb_revisions_title_comment']);
 			$this->store->save_chapter($chapter);
 		}else{
 			if(isset($chapter->ID)){
@@ -479,7 +479,7 @@ class Menu_Page_Controller {
 	function version_published_admin_notice__success() {
 		echo '
 		<div class="notice notice-success is-dismissible">
-			<p>The Version is published! Don\'t forget to <a href="'.get_admin_url( get_current_blog_id(), '/admin.php?page=pb_export').'">export</a> it.</p>
+			<p>The Version is published! Don\'t forget to <a href="'.esc_url(get_admin_url( get_current_blog_id(), '/admin.php?page=pb_export')).'">export</a> it.</p>
 		</div>';
 	}
 }

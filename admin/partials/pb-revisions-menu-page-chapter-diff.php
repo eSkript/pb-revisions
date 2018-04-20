@@ -37,9 +37,9 @@ function mce_before_init_pb_diff( $init_array ) {
 $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->is_added(), $data['chapter']->is_deleted(), $data['chapter']->comments, "pb_revisions_comments", $settings);
 ?>
 <div class="wrap">
-	<form action="<?php echo $form_url ?>" method="POST">
-		<input type="hidden" name="pb_revisions_chapter" value="<?php echo $data['chapter']->chapter?>">
-		<input type="hidden" name="pb_revisions_version" value="<?php echo $data['chapter']->version->ID?>">
+	<form action="<?php echo esc_url($form_url) ?>" method="POST">
+		<input type="hidden" name="pb_revisions_chapter" value="<?php echo esc_attr($data['chapter']->chapter)?>">
+		<input type="hidden" name="pb_revisions_version" value="<?php echo esc_attr($data['chapter']->version->ID)?>">
 		<?php if(!$data['chapter']->anything_changed()){?>
 			<div class="notice">
 				<h3>Unnecessary comments!</h3>
@@ -47,7 +47,7 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 					This chapter doesn't have any changes compared to the last version but does have change comments.
 					We recomend you to delete the comments.
 				</p>
-				<button type="submit" formaction="<?php echo $next_url ?>" class="button button-hero button-primary" name="pb_revisions_action" value="delete_chapter">
+				<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button button-hero button-primary" name="pb_revisions_action" value="delete_chapter">
 					Delete the comments!
 				</button>
 			</div>
@@ -59,13 +59,13 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 					This chapter has changed since you last edited the comments of it.
 					The comments might be outdated. Please check them.
 				</p>
-				<button type="submit" formaction="<?php echo $chapter_url ?>" class="button" name="pb_revisions_action" value="force_save_chapter">
+				<button type="submit" formaction="<?php echo esc_url($chapter_url) ?>" class="button" name="pb_revisions_action" value="force_save_chapter">
 					Discard
 				</button>
 			</div>
 		<?php } ?>
 		
-		<h1>Chapter: <?php echo $data['chapter']->title() ?></h1>
+		<h1>Chapter: <?php echo esc_html($data['chapter']->title()) ?></h1>
 
 		<table class="wp-list-table widefat fixed<?php
 						if($data['chapter']->is_added()) echo " pb_rev_diff_table__added";
@@ -146,7 +146,7 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 		</table>
 
 
-		<button type="submit" formaction="<?php echo $prev_url ?>" class="button button-hero" name="pb_revisions_action" value="save_chapter">
+		<button type="submit" formaction="<?php echo esc_url($prev_url) ?>" class="button button-hero" name="pb_revisions_action" value="save_chapter">
 			<?php if($has_prev){?>
 				Previous
 			<?php } else { ?>
@@ -156,7 +156,7 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 		<button type="submit" class="button button-hero" name="pb_revisions_action" value="save_chapter">
 			Save and Exit
 		</button>
-		<button type="submit" formaction="<?php echo $next_url ?>" class="button button-hero <?php echo $data['chapter']->anything_changed() ? 'button-primary' : ''?>" name="pb_revisions_action" value="save_chapter">
+		<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button button-hero <?php echo $data['chapter']->anything_changed() ? 'button-primary' : ''?>" name="pb_revisions_action" value="save_chapter">
 			<?php if($has_next){?>
 				Next
 			<?php } else { ?>

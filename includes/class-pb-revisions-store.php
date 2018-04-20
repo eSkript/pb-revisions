@@ -410,7 +410,6 @@ class Store {
 				$wpdb->query($s);
 			}
 			if($wpdb->last_error != '') {
-				echo $wpdb->last_error;
 				$error = new WP_Error("dberror", __("Database query error"), $wpdb->last_error);
 				return $error;
 			}

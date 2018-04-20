@@ -10,13 +10,13 @@ $date_format = get_option( 'date_format' );
 
 function pb_revision_the_content($content){
 	$content = apply_filters( 'the_content', $content );
-    echo str_replace( ']]>', ']]&gt;', $content );
+    echo wp_kses_post(str_replace( ']]>', ']]&gt;', $content ));
 }
 ?>
 <?php foreach ( array_reverse($versions) as $version ) : ?>
     <section class="pb_revisions_version">
-        <h2>Version <?php echo $version->number?></h2>
-        <div class="pb_revisions_version__date"><?php echo $version->draft ? "Draft" : get_date_from_gmt($version->date, $date_format); ?></div>
+        <h2>Version <?php echo esc_html($version->number)?></h2>
+        <div class="pb_revisions_version__date"><?php echo esc_html($version->draft ? "Draft" : get_date_from_gmt($version->date, $date_format)); ?></div>
         <?php if(!empty($version->comment)){?>
             <div class="pb_revisions_version__summary">
                 <?php pb_revision_the_content($version->comment)?>
@@ -26,12 +26,12 @@ function pb_revision_the_content($content){
             <div class="pb_revisions_version__chapters">
                 <?php foreach ( $version->chapters as $chapter ) : ?>
                     <div class="pb_revisions_version__chapter">
-                        <?php $url = esc_url( get_permalink( $chapter->chapter ) );
+                        <?php $url = get_permalink( $chapter->chapter ) ;
                             if(empty($url) || !$chapter->web_statuts_new()){ 
                         ?>
-                            <h3>Chapter: <?php echo $chapter->title()?></h3>
+                            <h3>Chapter: <?php echo esc_html($chapter->title())?></h3>
                         <?php }else{ ?>
-                            <h3><a href="<?php echo $url?>">Chapter: <?php echo $chapter->title()?></a></h3>
+                            <h3><a href="<?php echo esc_url($url)?>">Chapter: <?php echo esc_html($chapter->title())?></a></h3>
                         <?php } ?>
                         <?php pb_revision_the_content($chapter->title_comment)?>
                         <?php foreach ( $chapter->comments as $comment ) : ?>

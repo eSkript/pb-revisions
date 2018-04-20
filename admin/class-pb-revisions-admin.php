@@ -141,7 +141,7 @@ class Pb_Revisions_Admin {
 		foreach(array_reverse($versions) as $version){
 			if(!$version->draft){
 				$selected = $active_version==$version->number ? ' selected' : '';
-				echo '<option value="'.$version->ID.'"'.$selected.'>'.$version->number.'</option>';
+				echo '<option value="'.esc_attr($version->ID).'"'.$selected.'>'.esc_html($version->number).'</option>';
 			}
 		}
 	  	echo '</select>';

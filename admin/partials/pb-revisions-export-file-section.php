@@ -23,12 +23,12 @@ $c = 0; // start counter
 		if ( 0 == $c ) { ?>
 		<div class="export-files latest">
 		<div class="export-files__date"><?php printf( _x( '%1$s at %2$s', 'Date and time string, e.g. "January 1, 2016 at 12:00pm', 'pressbooks' ), date( $date_format, $exports['date'] ), date( $time_format, $exports['date'] ) ); ?></div>
-		<h2><?php _e( 'Latest Export', 'pressbooks' ); ?> - <?php echo $version_title;?></h2>
+		<h2><?php _e( 'Latest Export', 'pressbooks' ); ?> - <?php echo esc_html($version_title);?></h2>
 		
 	<?php } elseif ( $c > 0 ) { ?>
 		<div class="export-files">
 		<div class="export-files__date"><?php printf( _x( '%1$s at %2$s', 'Date and time string, e.g. "January 1, 2016 at 12:00pm', 'pressbooks' ), date( $date_format, $exports['date'] ), date( $time_format, $exports['date'] ) ); ?></div>
-		<h3><?php echo $version_title;?></h3>
+		<h3><?php echo esc_html($version_title);?></h3>
 		
 	<?php }
 foreach ( $exports['files'] as $file ) {
@@ -77,13 +77,13 @@ foreach ( $exports['files'] as $file ) {
 	$public_class = ($file['public']) ? " public": '';
 ?>
 	<form class="export-file" action="<?php echo $export_delete_url; ?>" method="post">
-		<input type="hidden" name="filename" value="<?php echo $file['file']; ?>" />
+		<input type="hidden" name="filename" value="<?php echo esc_attr($file['file']); ?>" />
 		<input type="hidden" name="delete_export_version" value="<?php echo $exports['folder']?>" />
 		<input type="hidden" name="delete_export_file" value="true" />
 		<div class="export-file-container">
-	<a class="export-file" href="<?php echo ( $download_url_prefix . $file['file'].'&download_export_version='.$exports['folder'] ); ?>"><span class="export-file-icon <?php echo ( 0 == $c ? 'large' : 'small' ); ?> <?php echo $file_class; echo $public_class; ?>" title="<?php echo esc_attr( $file['file'] ); ?>"></span></a>
+	<a class="export-file" href="<?php echo ( $download_url_prefix . esc_attr($file['file']).'&download_export_version='.$exports['folder'] ); ?>"><span class="export-file-icon <?php echo ( 0 == $c ? 'large' : 'small' ); ?> <?php echo $file_class; echo $public_class; ?>" title="<?php echo esc_attr( $file['file'] ); ?>"></span></a>
 	<div class="file-actions">
-		<a href="<?php echo ( $download_url_prefix . $file['file'].'&download_export_version='.$exports['folder'] ); ?>"><span class="dashicons dashicons-download"></span></a>
+		<a href="<?php echo ( $download_url_prefix . esc_attr($file['file']).'&download_export_version='.sanitize_file_name($exports['folder']) ); ?>"><span class="dashicons dashicons-download"></span></a>
 		<button class="delete" type="submit" name="submit" src="" value="Delete" onclick="if ( !confirm('<?php esc_attr_e( 'Are you sure you want to delete this?', 'pressbooks' ); ?>' ) ) { return false }"><span class="dashicons dashicons-trash"></span></button>
 	</div>
 		</div>
