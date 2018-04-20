@@ -187,7 +187,7 @@ class Menu_Page_Controller {
         if(isset($_POST['pb_revisions_version']) && isset($_POST['pb_revisions_comment'])){
 			$version = $this->store->get_version($_POST['pb_revisions_version']);
 			if(isset($version)){
-				$version->comment = wp_kses_post(stripslashes($_POST['pb_revisions_comment']));
+				$version->comment = $_POST['pb_revisions_comment'];
 				$this->store->save_version($version);
 			}
 		}
