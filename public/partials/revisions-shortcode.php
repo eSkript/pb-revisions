@@ -15,8 +15,8 @@ function pb_revision_the_content($content){
 ?>
 <?php foreach ( array_reverse($versions) as $version ) : ?>
     <section class="pb_revisions_version">
-        <h2>Version <?php echo esc_html($version->number)?></h2>
-        <div class="pb_revisions_version__date"><?php echo esc_html($version->draft ? "Draft" : get_date_from_gmt($version->date, $date_format)); ?></div>
+        <h2><?php printf(__('Version %s', 'pb-revisions'), esc_html($version->number));?></h2>
+        <div class="pb_revisions_version__date"><?php echo esc_html($version->draft ? __('Draft', 'pb-revisions') : get_date_from_gmt($version->date, $date_format)); ?></div>
         <?php if(!empty($version->comment)){?>
             <div class="pb_revisions_version__summary">
                 <?php pb_revision_the_content($version->comment)?>
@@ -29,9 +29,9 @@ function pb_revision_the_content($content){
                         <?php $url = get_permalink( $chapter->chapter ) ;
                             if(empty($url) || !$chapter->web_statuts_new()){ 
                         ?>
-                            <h3>Chapter: <?php echo esc_html($chapter->title())?></h3>
+                            <h3><?php printf(__('Chapter: %s', 'pb-revisions'), esc_html($chapter->title()));?></h3>
                         <?php }else{ ?>
-                            <h3><a href="<?php echo esc_url($url)?>">Chapter: <?php echo esc_html($chapter->title())?></a></h3>
+                            <h3><a href="<?php echo esc_url($url)?>"><?php printf(__('Chapter: %s', 'pb-revisions'), esc_html($chapter->title()));?></a></h3>
                         <?php } ?>
                         <?php pb_revision_the_content($chapter->title_comment)?>
                         <?php foreach ( $chapter->comments as $comment ) : ?>

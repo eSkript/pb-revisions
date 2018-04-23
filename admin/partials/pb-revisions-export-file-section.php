@@ -14,9 +14,9 @@ $c = 0; // start counter
 	$files = \PBRevisions\includes\Export::group_exports();
 	foreach ( $files as $exports ) {
 		if($exports['version'] == "working"){
-			$version_title = "Working Version";
+			$version_title = __('Preview', 'pb-revisions');
 		}else{
-			$version_title = "Version: ". $exports['version'];
+			$version_title = sprintf(__('Version: %s', 'pb-revisions'), $exports['version']);
 		}
 		
 		// Echo files to screen

@@ -133,11 +133,11 @@ class Pb_Revisions_Admin {
 		$versions = $store->get_versions();
 		$active_version = $store->get_active_export_version_number();
 		echo '<div class="clear"></div>';
-		echo '<h3>Version</h3>';
-		echo '<p>Select which version you want to export</p>';
+		echo '<h3>'.__('Version', 'pb-revisions').'</h3>';
+		_e('<p>Select which version you want to export</p>', 'pb-revisions');
 		echo '<div class="clear">';
 		echo '<select name="pb_revisions_version">';
-		echo '<option value="working">Working Version</option>';
+		echo '<option value="working">'.__('Preview', 'pb-revisions').'</option>';
 		foreach(array_reverse($versions) as $version){
 			if(!$version->draft){
 				$selected = $active_version==$version->number ? ' selected' : '';

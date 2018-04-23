@@ -189,7 +189,7 @@ class Text_Diff {
             if(count($r_content_a) > 0){
                 $r_content = implode("\n", $r_content_a);
                 echo '<tr><td></td><td></td><td class="pb_rev_diff_editor_cell pb_rev_diff_editor_cell__to_much">';
-                echo '<span class="dashicons dashicons-warning"></span> These comments are not associated with any paragraph. Please move them to the right place.';
+                echo '<span class="dashicons dashicons-warning"></span> '._e('These comments are not associated with any paragraph. Please move them to the right place.', 'pb-revisions');
                 wp_editor($r_content , $this->editors_name."-r", $this->editors_settings );
                 echo "<input type='hidden' name='".esc_attr($this->editors_name."-r-orig")."' value='".esc_attr($r_content)."'";
                 echo '</td></tr>';

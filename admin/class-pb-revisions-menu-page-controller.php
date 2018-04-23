@@ -477,9 +477,8 @@ class Menu_Page_Controller {
      * @return  boolean  If okay
 	 */
 	function version_published_admin_notice__success() {
-		echo '
-		<div class="notice notice-success is-dismissible">
-			<p>The Version is published! Don\'t forget to <a href="'.esc_url(get_admin_url( get_current_blog_id(), '/admin.php?page=pb_export')).'">export</a> it.</p>
-		</div>';
+		echo '<div class="notice notice-success is-dismissible">';
+		printf(__('<p>The Version got published! Don\'t forget to <a href="%s">export</a> it.</p>', 'pb-revisions'), esc_url(get_admin_url( get_current_blog_id(), '/admin.php?page=pb_export')));
+		echo'</div>';
 	}
 }

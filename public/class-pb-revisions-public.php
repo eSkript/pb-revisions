@@ -86,11 +86,14 @@ class Pb_Revisions_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/pb-revisions-public.js', array( 'jquery' ), $this->version, false );
 
-		//Working Version Button
+		//Preview Button
 		if(\PBRevisions\includes\Version_Controller::can_user_see_working_version()){
             wp_register_script( $this->plugin_name."_button", plugin_dir_url( __FILE__ ) . 'js/button.js', array( 'jquery' ), $this->version, false );
             $value_array = array(
-                //'some_string' => __( 'Some string to translate', 'plugin-domain' ),
+				'_showPreview' => __('Show Preview', 'pb-revisions'),
+				'_deactivatePreview' => __('Deactivate Preview', 'pb-revisions'),
+				'_deactivate' => __('Deactivate', 'pb-revisions'),
+				'_previewNotice' => __('You currently see a preview. Your readers see an other version.', 'pb-revisions'),
                 'is_on' => get_user_meta( get_current_user_id(), "pb_revisions_show_working_version", true ) || get_query_var("preview", false),
                 'hide_url' => esc_url(add_query_arg( array(
                     'pb_revisions_hide_working_version' => true,
@@ -184,7 +187,7 @@ class Pb_Revisions_Public {
 	 */
 	public function handle_version_shortcode($atts) {
 		$a = shortcode_atts( array(
-			'working_version_title' => "Working Version" //TODO
+			'preview_title' => __('Preview', 'pb-revisions')
 		), $atts );
 
 		$v = \PBRevisions\includes\Version_Controller::version_to_show();
@@ -192,7 +195,7 @@ class Pb_Revisions_Public {
 		if(!empty($v)){
 			return esc_html( $v );
 		}else{
-			return esc_html( $a['working_version_title'] );
+			return esc_html( $a['preview_title'] );
 		}
 	}
 

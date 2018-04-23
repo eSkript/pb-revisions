@@ -42,30 +42,29 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 		<input type="hidden" name="pb_revisions_version" value="<?php echo esc_attr($data['chapter']->version->ID)?>">
 		<?php if(!$data['chapter']->anything_changed()){?>
 			<div class="notice">
-				<h3>Unnecessary comments!</h3>
+				<h3><?php _e('Unnecessary comments!', 'pb-revisions');?></h3>
 				<p>
-					This chapter doesn't have any changes compared to the last version but does have change comments.
-					We recomend you to delete the comments.
+					<?php _e("This chapter doesn't have any changes compared to the last version but does have change comments.
+					We recomend you to delete the comments.", 'pb-revisions');?>
 				</p>
 				<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button button-hero button-primary" name="pb_revisions_action" value="delete_chapter">
-					Delete the comments!
+					<?php _e('Delete the comments!', 'pb-revisions');?>
 				</button>
 			</div>
 		<?php } ?>
 		<?php if($data['chapter']->contend_new_changed_since_draft() && $data['chapter']->anything_changed()){?>
 			<div class="notice">
-				<h3>Chapter changed!</h3>
+				<h3><?php _e('Chapter changed!', 'pb-revisions');?></h3>
 				<p>
-					This chapter has changed since you last edited the comments of it.
-					The comments might be outdated. Please check them.
+					<?php _e('This chapter has changed since you last edited the comments of it. The comments might be outdated. Please check them.', 'pb-revisions');?>
 				</p>
 				<button type="submit" formaction="<?php echo esc_url($chapter_url) ?>" class="button" name="pb_revisions_action" value="force_save_chapter">
-					Discard
+					<?php _e('Discard', 'pb-revisions');?>
 				</button>
 			</div>
 		<?php } ?>
 		
-		<h1>Chapter: <?php echo esc_html($data['chapter']->title()) ?></h1>
+		<h1><?php printf(__('Chapter: %s', 'pb-revisions'), esc_html($data['chapter']->title()));?></h1>
 
 		<table class="wp-list-table widefat fixed<?php
 						if($data['chapter']->is_added()) echo " pb_rev_diff_table__added";
@@ -81,9 +80,9 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 			</colgroup>
 			<thead>
 				<tr>
-					<th>Old</th>
-					<th>New</th>
-					<th>Add your comments:</th>
+					<th><?php _e('Old', 'pb-revisions');?></th>
+					<th><?php _e('New', 'pb-revisions');?></th>
+					<th><?php _e('Add your comments:', 'pb-revisions');?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -93,7 +92,7 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 				</tr>
 				<tr class="pb_rev_diff_row">
 					<td class="pb_rev_diff_cell">
-						<span class="dashicons dashicons-admin-site"></span> Web Book:
+						<span class="dashicons dashicons-admin-site"></span> <?php _e('Web Book:', 'pb-revisions');?>
 						<?php if(!$data['chapter']->is_added()){?>
 							<?php if($data['chapter']->web_statuts_old()){?>
 								<span class="dashicons dashicons-yes"></span>
@@ -106,7 +105,7 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 						if($data['chapter']->web_status_changed() && $data['chapter']->web_statuts_new()) echo "pb_rev_diff_cell__added";
 						if($data['chapter']->web_status_changed() && !$data['chapter']->web_statuts_new()) echo "pb_rev_diff_cell__removed";
 					?>">
-						<span class="dashicons dashicons-admin-site"></span> Web Book:
+						<span class="dashicons dashicons-admin-site"></span> <?php _e('Web Book:', 'pb-revisions');?>
 						<?php if(!$data['chapter']->is_deleted()){?>
 							<?php if($data['chapter']->web_statuts_new()){?>
 								<span class="dashicons dashicons-yes"></span>
@@ -118,7 +117,7 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 				</tr>
 				<tr class="pb_rev_diff_row">
 					<td class="pb_rev_diff_cell">
-						<span class="dashicons dashicons-migrate"></span> Export:
+						<span class="dashicons dashicons-migrate"></span><?php _e('Export:', 'pb-revisions');?> 
 						<?php if(!$data['chapter']->is_added()){?>
 							<?php if($data['chapter']->export_status_old){?>
 								<span class="dashicons dashicons-yes"></span>
@@ -131,7 +130,7 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 						if($data['chapter']->export_status_changed() && $data['chapter']->export_status_new) echo "pb_rev_diff_cell__added";
 						if($data['chapter']->export_status_changed() && !$data['chapter']->export_status_new) echo "pb_rev_diff_cell__removed";
 					?>">
-						<span class="dashicons dashicons-migrate"></span> Export:
+						<span class="dashicons dashicons-migrate"></span><?php _e('Export:', 'pb-revisions');?>
 						<?php if(!$data['chapter']->is_deleted()){?>
 							<?php if($data['chapter']->export_status_new){?>
 								<span class="dashicons dashicons-yes"></span>
@@ -148,19 +147,19 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 
 		<button type="submit" formaction="<?php echo esc_url($prev_url) ?>" class="button button-hero" name="pb_revisions_action" value="save_chapter">
 			<?php if($has_prev){?>
-				Previous
+				<?php _e('Previous', 'pb-revisions');?>
 			<?php } else { ?>
-				Back to Summary
+				<?php _e('Back to Summary', 'pb-revisions');?>
 			<?php } ?>
 		</button>
 		<button type="submit" class="button button-hero" name="pb_revisions_action" value="save_chapter">
-			Save and Exit
+		<?php _e('Save and Exit', 'pb-revisions');?>
 		</button>
 		<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button button-hero <?php echo $data['chapter']->anything_changed() ? 'button-primary' : ''?>" name="pb_revisions_action" value="save_chapter">
 			<?php if($has_next){?>
-				Next
+				<?php _e('Next', 'pb-revisions');?>
 			<?php } else { ?>
-				To Review
+				<?php _e('To Review', 'pb-revisions');?>
 			<?php } ?>
 		</button>
 	</form>
