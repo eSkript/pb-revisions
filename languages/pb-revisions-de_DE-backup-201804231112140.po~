@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-04-23 11:03+0000\n"
+"PO-Revision-Date: 2018-04-23 11:09+0000\n"
 "Last-Translator: admin <vccw@example.com>\n"
-"Language-Team: German\n"
+"Language-Team: Deutsch\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Loco https://localise.biz/"
@@ -312,7 +312,7 @@ msgstr ""
 
 #: public/class-pb-revisions-public.php:93
 msgid "Show Preview"
-msgstr "Vorschau zeigen"
+msgstr "Vorschau aktivieren"
 
 #: public/class-pb-revisions-public.php:94
 msgid "Deactivate Preview"

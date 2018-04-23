@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-04-23 11:09+0000\n"
+"PO-Revision-Date: 2018-04-23 11:12+0000\n"
 "Last-Translator: admin <vccw@example.com>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -333,16 +333,16 @@ msgstr "Version %s"
 
 #. Plugin Name of the plugin/theme
 msgid "Pressbooks Revisions"
-msgstr ""
+msgstr "Pressbooks Revisions"
 
 #. Plugin URI of the plugin/theme
 msgid "https://github.com/eSkript/pb-revisions"
-msgstr ""
+msgstr "https://github.com/eSkript/pb-revisions"
 
 #. Author of the plugin/theme
 msgid "Lukas Kaiser"
-msgstr ""
+msgstr "Lukas Kaiser"
 
 #. Author URI of the plugin/theme
 msgid "https://github.com/lukaiser"
-msgstr ""
+msgstr "https://github.com/lukaiser"
