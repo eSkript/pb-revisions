@@ -4,18 +4,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $form_url = get_admin_url( get_current_blog_id(), '/admin.php?page=pb_revisions' );
 $chapter_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=chapter_diff&pb_revisions_version={$data['chapter']->version->ID}&pb_revisions_chapter={$data['chapter']->chapter}" );
+$summary_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=version_summary&pb_revisions_version={$data['chapter']->version->ID}" );
 if($data['chapter']->next_chapter_ID){
 	$next_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=chapter_diff&pb_revisions_version={$data['chapter']->version->ID}&pb_revisions_chapter={$data['chapter']->next_chapter_ID}" );
 	$has_next = true;
 }else{
-	$next_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=version_review&pb_revisions_version={$data['chapter']->version->ID}" );
 	$has_next = false;
 }
 if($data['chapter']->prev_chapter_ID){
 	$prev_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=chapter_diff&pb_revisions_version={$data['chapter']->version->ID}&pb_revisions_chapter={$data['chapter']->prev_chapter_ID}" );
 	$has_prev = true;
 }else{
-	$prev_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=version_summary&pb_revisions_version={$data['chapter']->version->ID}" );
 	$has_prev = false;
 }
 $settings = array(
@@ -144,23 +143,18 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 			</tbody>
 		</table>
 
-
-		<button type="submit" formaction="<?php echo esc_url($prev_url) ?>" class="button button-hero" name="pb_revisions_action" value="save_chapter">
-			<?php if($has_prev){?>
-				<?php _e('Previous', 'pb-revisions');?>
-			<?php } else { ?>
-				<?php _e('Back to Summary', 'pb-revisions');?>
-			<?php } ?>
+		<?php if($has_prev){?>
+			<button type="submit" formaction="<?php echo esc_url($prev_url) ?>" class="button button-hero" name="pb_revisions_action" value="save_chapter">
+					<?php _e('Previous', 'pb-revisions');?>
+			</button>
+		<?php } ?>
+		<button type="submit" formaction="<?php echo esc_url($summary_url) ?>" class="button button-hero <?php echo !$has_next ? 'button-primary' : ''?>" name="pb_revisions_action" value="save_chapter">
+			<?php _e('To Summary', 'pb-revisions');?>
 		</button>
-		<button type="submit" class="button button-hero" name="pb_revisions_action" value="save_chapter">
-		<?php _e('Save and Exit', 'pb-revisions');?>
-		</button>
-		<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button button-hero <?php echo $data['chapter']->anything_changed() ? 'button-primary' : ''?>" name="pb_revisions_action" value="save_chapter">
-			<?php if($has_next){?>
-				<?php _e('Next', 'pb-revisions');?>
-			<?php } else { ?>
-				<?php _e('To Review', 'pb-revisions');?>
-			<?php } ?>
-		</button>
+		<?php if($has_next){?>
+			<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button button-hero <?php echo $data['chapter']->anything_changed() ? 'button-primary' : ''?>" name="pb_revisions_action" value="save_chapter">
+					<?php _e('Next', 'pb-revisions');?>
+			</button>
+		<?php } ?>
 	</form>
 </div>

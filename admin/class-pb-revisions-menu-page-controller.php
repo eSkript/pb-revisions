@@ -171,7 +171,14 @@ class Menu_Page_Controller {
 				$v = new \PBRevisions\includes\models\Version(get_current_user_id());
 				$v->set_number_by_last($last_version->number, $_POST['pb_revisions_type']);
 				$version_id = $this->store->save_version($v);
-				wp_redirect( get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=version_summary&pb_revisions_version={$version_id}" ), 301 );
+				$v->ID = $version_id;
+				$first_chapter = $this->store->get_chapter(-1, $v);
+				if(empty($first_chapter)){
+					wp_redirect( get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=version_summary&pb_revisions_version={$version_id}" ), 301 );
+				}else{
+					wp_redirect( get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=basic_or_chapter_comments&pb_revisions_version={$version_id}" ), 301 );
+				}
+				
 				exit;
 			}
 		}
@@ -334,8 +341,8 @@ class Menu_Page_Controller {
 			if($_GET['pb_revisions_view'] == "chapter_diff"){
 				return $this->render_page_chapter_diff();
 			}
-			if($_GET['pb_revisions_view'] == "version_review"){
-				return $this->render_page_version_review();
+			if($_GET['pb_revisions_view'] == "basic_or_chapter_comments"){
+				return $this->render_basic_or_chapter_comments();
 			}
 		}
 		
@@ -392,8 +399,9 @@ class Menu_Page_Controller {
 			if(isset($version)){
 				$data = array(
 					'version' => $version,
-					'first_chapter' => $this->store->get_chapter(-1, $version),
-					'has_saved_chapters' => $this->store->has_version_saved_chapters($version)
+					'chapters' => $this->store->get_chapters($version),
+					'has_saved_chapters' => $this->store->has_version_saved_chapters($version),
+					'first_chapter' => $this->store->get_chapter(-1, $version)
 				);
 				$this->render_page('version_summary', $data);
 			}
@@ -431,15 +439,15 @@ class Menu_Page_Controller {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function render_page_version_review() {
+	private function render_basic_or_chapter_comments() {
 		if(isset($_GET['pb_revisions_version'])){
 			$version = $this->store->get_version($_GET['pb_revisions_version']);
 			if(isset($version)){
 				$data = array(
 					'version' => $version,
-					'chapters' => $this->store->get_chapters($version)
+					'first_chapter' => $this->store->get_chapter(-1, $version)
 				);
-				$this->render_page('version_review', $data);
+				$this->render_page('basic_or_chapter_comments', $data);
 			}
 		}
 		//TODO errors
