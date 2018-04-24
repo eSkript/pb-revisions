@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $form_url = get_admin_url( get_current_blog_id(), '/admin.php?page=pb_revisions' );
 $chapter_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=chapter_diff&pb_revisions_version={$data['chapter']->version->ID}&pb_revisions_chapter={$data['chapter']->chapter}" );
+$other_chapter_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=chapter_diff&pb_revisions_version={$data['chapter']->version->ID}&pb_revisions_chapter=" );
 $summary_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=version_summary&pb_revisions_version={$data['chapter']->version->ID}" );
 if($data['chapter']->next_chapter_ID){
 	$next_url = get_admin_url( get_current_blog_id(), "/admin.php?page=pb_revisions&pb_revisions_view=chapter_diff&pb_revisions_version={$data['chapter']->version->ID}&pb_revisions_chapter={$data['chapter']->next_chapter_ID}" );
@@ -38,15 +39,17 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 <form action="<?php echo esc_url($form_url) ?>" method="POST">
 <div class="pbr-header">
 	<div class="pbr-header__content">
-		<div class="pbr-header__left">
+		<div class="pbr-header__align-center">
 			<button type="submit" formaction="<?php echo esc_url($summary_url) ?>" class="button" name="pb_revisions_action" value="save_chapter">
 				<?php _e('To Summary', 'pb-revisions');?>
 			</button>
 		</div>
-		<div class="pbr-header__center">
+		<div class="pdr-footer__grow"></div>
+		<div>
 			<h1><?php printf(__('Chapter: %s', 'pb-revisions'), esc_html($data['chapter']->title()));?></h1>
 		</div>
-		<div class="pbr-header__right">
+		<div class="pdr-footer__grow"></div>
+		<div class="pbr-header__align-center">
 			<button type="submit" class="button" name="pb_revisions_action" value="save_chapter"><?php _e('Save and Exit', 'pb-revisions');?></button>
 		</div>
 	</div>
@@ -166,14 +169,30 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 
 <div class="pbr-footer">
 	<div class="pbr-footer__content">
-		<div class="pbr-footer__left">
+		<div>
 			<?php if($has_prev){?>
 				<button type="submit" formaction="<?php echo esc_url($prev_url) ?>" class="button" name="pb_revisions_action" value="save_chapter">
 						<?php _e('Previous', 'pb-revisions');?>
 				</button>
 			<?php } ?>
 		</div>
-		<div class="pbr-footer__right">
+		<div class="pdr-footer__grow"></div>
+		<div class="pbr_go_to_chapter_list">
+			<a href="#" id="pbr_go_to_chapter_list__toggle_button">
+						<?php _e('Go to', 'pb-revisions');?>
+			</a>
+			<div id="pbr_go_to_chapter_list__list" class="pbr_go_to_chapter_list__list" style="display: none;">
+				<?php foreach ( $data['chapters'] as $list_chapter ) : ?>
+					<?php if($data['chapter']->chapter != $list_chapter->chapter){?>
+						<button type="submit" formaction="<?php echo esc_url($other_chapter_url.$list_chapter->chapter)?>" class="button pbr_go_to_chapter_list__chapter_button" name="pb_revisions_action" value="save_chapter">
+								<?php esc_html_e($list_chapter->title());?>
+						</button>
+					<?php }?>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<div class="pdr-footer__grow"></div>
+		<div>
 			<?php if($has_next){?>
 				<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button <?php echo $data['chapter']->anything_changed() ? 'button-primary' : ''?>" name="pb_revisions_action" value="save_chapter">
 						<?php _e('Next', 'pb-revisions');?>

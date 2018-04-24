@@ -16,10 +16,12 @@ $settings = array(
 <form action="<?php echo esc_url($form_url) ?>" method="POST">
 <div class="pbr-header">
 	<div class="pbr-header__content">
-		<div class="pbr-header__center">
+		<div class="pdr-footer__grow"></div>
+		<div>
 			<h1><?php printf(__('Version %s', 'pb-revisions'), esc_html($data['version']->number));?></h1>
 		</div>
-		<div class="pbr-header__right">
+		<div class="pdr-footer__grow"></div>
+		<div class="pbr-header__align-center">
 			<button type="submit" class="button<?php echo !$draft ? ' button-primary' :'' ?>" name="pb_revisions_action" value="save_version"><?php _e('Save and Exit', 'pb-revisions');?></button>
 			<?php if($draft){?>
 				<button type="submit" class="button button-primary" name="pb_revisions_action" value="publish_version"  onclick="if ( !confirm('<?php esc_attr_e( 'Are you sure you want to publish this version? There is no way back!', 'pb_revisions' ); ?>' ) ) { return false }"><?php _e('Publish', 'pb-revisions');?></button>
@@ -54,5 +56,28 @@ $settings = array(
 				</p>
 			<?php } ?>
 </div>
+
+<?php if($data['has_saved_chapters'] && !empty($data['chapters'])){?>
+
+<div class="pbr-footer">
+	<div class="pbr-footer__content">
+		<div class="pdr-footer__grow"></div>
+		<div class="pbr_go_to_chapter_list">
+			<a href="#" id="pbr_go_to_chapter_list__toggle_button">
+						<?php _e('Go to', 'pb-revisions');?>
+			</a>
+			<div id="pbr_go_to_chapter_list__list" class="pbr_go_to_chapter_list__list" style="display: none;">
+				<?php foreach ( $data['allChapters'] as $list_chapter ) : ?>
+						<button type="submit" formaction="<?php echo esc_url($chapter_url.$list_chapter->chapter)?>" class="button pbr_go_to_chapter_list__chapter_button" name="pb_revisions_action" value="save_chapter">
+								<?php esc_html_e($list_chapter->title());?>
+						</button>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<div class="pdr-footer__grow"></div>
+	</div>
+</div>
+
+<?php } ?>
 
 </form>

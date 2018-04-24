@@ -439,6 +439,51 @@ class Store {
 		$out->set_neighbors($prev, $next);
 		return $out;
 	}
+
+	/**
+	 * Get All chapters with changes
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @param       Pb_Revisions_Version  $version  The version
+	 * @return      array       Array of chapters
+	 */
+	public function get_all_chapters_with_changes($version) {
+		global $wpdb;
+		if(empty($version->prev_number)){
+			return false;
+		}
+		$sql = file_get_contents(plugin_dir_path( dirname( __FILE__ ) ) . 'includes/sql/selectAllChanges.sql');
+		$sql = $this->replace_chapter_tables_strings($sql, $version);
+		$sql = $wpdb->prepare(
+			$sql,
+			$version->ID
+		);
+
+		$sqls = explode(';', $sql);
+		$lastElement = end($sqls);
+		foreach($sqls as $s){
+			if($s == $lastElement){
+				$chapters = $wpdb->get_results($s);
+			}else{
+				$wpdb->query($s);
+			}
+			if($wpdb->last_error != '') {
+				$error = new WP_Error("dberror", __("Database query error"), $wpdb->last_error);
+				return $error;
+			}
+		}
+		
+		return array_map(function($c) use ($version){
+			$out = new \PBRevisions\includes\models\Chapter($version, $c->ID, $c->chapter);
+			if(!empty($version->prev_number)){
+				$out->set_old_values($c->post_content_old, $c->post_title_old, $c->post_status_old, $c->pb_export_old=="on", $c->menu_order_old, $c->post_type_old);
+			}
+			$out->set_new_values($c->post_content_new, $c->post_title_new, $c->post_status_new, $c->pb_export_new=="on", $c->menu_order_new, $c->post_type_new);
+			$out->set_comments($c->title_comment, unserialize($c->comments), $c->content_draft_hash);
+			return $out;
+		}, $chapters);
+	}
 	
 	/**
 	 * Has saved chapters?

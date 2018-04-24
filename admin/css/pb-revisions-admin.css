@@ -141,8 +141,8 @@
     position: relative;
     margin-right: 20px;
     background-color: #EFEFEF;
-    height: 30px;
     padding: 10px;
+    display: flex;
 }
 
 .pbr-header__content{
@@ -155,7 +155,7 @@
 
 .pbr-header__content h1{
     font-size: 1.6em;
-    margin: 0.74em 0;
+    margin: 0.34em 0;
 }
 
 .pbr-footer {
@@ -167,32 +167,12 @@
     z-index: 10;
 }
 
-.pbr-header__left, .pbr-footer__left{
-    position: relative;
-    z-index: 10
+.pbr-header__align-center, .pbr-footer__align-center{
+    align-self: center;
 }
 
-.pbr-header__center {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
-.pbr-footer__center {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
-.pbr-header__right, .pbr-footer__right{
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    z-index: 10
+.pbr-header__grow, .pdr-footer__grow{
+    flex-grow: 1;
 }
 
 .pb_revisions_version__chapters{
@@ -220,4 +200,30 @@
 .button.pb_revisions_version__edit_button{
     vertical-align: baseline;
     margin-left: 5px;
+}
+
+.pbr_go_to_chapter_list {
+    text-align: center;
+}
+
+.pbr_go_to_chapter_list__list {
+    column-count: 3;
+    column-gap: 25px;
+    padding: 15px;
+}
+
+.button.pbr_go_to_chapter_list__chapter_button, .button.pbr_go_to_chapter_list__chapter_button:hover, .button.pbr_go_to_chapter_list__chapter_button:focus {
+    display: block;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: #d4002d;
+    text-decoration: underline;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid-column;
+}
+
+.button.pbr_go_to_chapter_list__chapter_button:hover{
+    color: #d4002d;
 }

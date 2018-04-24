@@ -1,6 +1,12 @@
 (function( $ ) {
 	'use strict';
 
+	$(function() {
+		$("#pbr_go_to_chapter_list__toggle_button").click(function(){
+			$("#pbr_go_to_chapter_list__list").toggle();
+		});
+	});
+
 	/**
 	 * All of the code for your admin-facing JavaScript source
 	 * should reside in this file.

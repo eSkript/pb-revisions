@@ -400,6 +400,7 @@ class Menu_Page_Controller {
 				$data = array(
 					'version' => $version,
 					'chapters' => $this->store->get_chapters($version),
+					'allChapters' => $this->store->get_all_chapters_with_changes($version),
 					'has_saved_chapters' => $this->store->has_version_saved_chapters($version),
 					'first_chapter' => $this->store->get_chapter(-1, $version)
 				);
@@ -423,7 +424,8 @@ class Menu_Page_Controller {
 				$chapter = $this->store->get_chapter($_GET['pb_revisions_chapter'], $version);
 				if(!empty($chapter)){
 					$data = array(
-						'chapter' => $chapter
+						'chapter' => $chapter,
+						'chapters' => $this->store->get_all_chapters_with_changes($version)
 					);
 					return $this->render_page('chapter_diff', $data);
 				}
