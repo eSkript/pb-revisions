@@ -132,6 +132,7 @@ class Pb_Revisions_Admin {
 		$store = new \PBRevisions\includes\Store();
 		$versions = $store->get_versions();
 		$active_version = $store->get_active_export_version_number();
+		$active_web_version = $store->get_active_version_number();
 		echo '<div class="clear"></div>';
 		echo '<h3>'.__('Version', 'pb-revisions').'</h3>';
 		_e('<p>Select which version you want to export</p>', 'pb-revisions');
@@ -141,7 +142,8 @@ class Pb_Revisions_Admin {
 		foreach(array_reverse($versions) as $version){
 			if(!$version->draft){
 				$selected = $active_version==$version->number ? ' selected' : '';
-				echo '<option value="'.esc_attr($version->ID).'"'.$selected.'>'.esc_html($version->number).'</option>';
+				$active_web = $active_web_version==$version->number ? '*' : '';
+				echo '<option value="'.esc_attr($version->ID).'"'.$selected.'>'.esc_html($version->number).$active_web.'</option>';
 			}
 		}
 	  	echo '</select>';

@@ -16,7 +16,8 @@ $settings = array(
 <div class="wrap">
 	<form action="<?php echo esc_url($form_url) ?>" method="POST">
 		<input type="hidden" name="pb_revisions_version" value="<?php echo esc_attr($data['version']->ID)?>">
-		<h1><?php printf(__('Summary Version %s', 'pb-revisions'), esc_html($data['version']->number));?></h1>
+		<h1><?php printf(__('Version %s', 'pb-revisions'), esc_html($data['version']->number));?></h1>
+		<h2><?php _e('Summary', 'pb-revisions');?></h2>
 		<?php _e('<p>Write here a short summary of the changes since the last version.</p>', 'pb-revisions');?>
 		<?php echo wp_editor( $data['version']->comment, 'pb_revisions_comment', $settings ); ?>
 		<?php foreach ( $data['chapters'] as $chapter ) : ?>

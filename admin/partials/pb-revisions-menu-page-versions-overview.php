@@ -9,7 +9,7 @@ $date_format = get_option( 'date_format' );
 <h1><?php _e('Revisions', 'pb-revisions');?></h1>
 <?php do_action( 'admin_notices' );?>
 <p>
-	<span class="dashicons dashicons-admin-site"></span> <?php printf(__('Active Version: %s', 'pb-revisions'), esc_html($data['active_version'] ? $data['active_version']->number : ""));?>
+	<span class="dashicons pbricons-revision"></span> <?php printf(__('Active Version: %s', 'pb-revisions'), esc_html($data['active_version'] ? $data['active_version']->number : ""));?>
 </p>
 <table class="wp-list-table widefat fixed" cellspacing="0">
 	<thead>
@@ -29,7 +29,7 @@ $date_format = get_option( 'date_format' );
 				<td><?php echo esc_html(get_userdata( $version->author )->display_name)?></td>
 				<td>
 					<?php if($data['active_version'] == $version) {?>
-						<span class="dashicons dashicons-admin-site"></span> <?php _e('Active', 'pb-revisions');?> 
+						<span class="dashicons pbricons-revision__white"></span> <?php _e('Active', 'pb-revisions');?> 
 					<?php }else if(!$version->draft){?>
 						<form action="<?php echo esc_url($form_url) ?>" method="POST">
 							<input type="hidden" name="pb_revisions_version" value="<?php echo esc_attr($version->ID)?>">
