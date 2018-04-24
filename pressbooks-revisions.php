@@ -37,6 +37,10 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'PB_REVISIONS_VERSION', '1.0.0' );
 
+if ( ! defined( 'PB_REVISIONS_PLUGIN_URL' ) ) {
+	define( 'PB_REVISIONS_PLUGIN_URL', trailingslashit( plugins_url( 'pressbooks-revisions' ) ) ); // Must have trailing slash!
+}
+
 $role = get_role( 'administrator' );
 $role->add_cap( 'activate_plugins' );
 

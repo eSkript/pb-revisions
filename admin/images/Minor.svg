@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="233px" height="141px" viewBox="0 0 233 141" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Minor</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="233" height="141"></rect>
+    </defs>
+    <g id="2.1---1.0.1---Type" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-692.000000, -410.000000)">
+        <g id="Minor" transform="translate(669.000000, 322.000000)">
+            <g transform="translate(23.000000, 88.000000)">
+                <g id="Rectangle-4">
+                    <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <rect stroke="#979797" stroke-width="1" x="0.5" y="0.5" width="232" height="140"></rect>
+                </g>
+                <g id="Group-2" transform="translate(176.000000, 81.000000) scale(1, -1) translate(-176.000000, -81.000000) translate(159.000000, 65.000000)">
+                    <polygon id="Triangle" fill="#BB0028" points="0 9 18 0 18 18"></polygon>
+                    <path d="M33.9277704,31.8665468 C34.0988685,18.2445522 33.7270574,9.00080305 17.914659,9.00080305" id="Path-2" stroke="#BB0028" stroke-width="6"></path>
+                </g>
+                <rect id="Rectangle-5" fill="#24282D" x="37" y="14" width="116" height="29" rx="8"></rect>
+                <circle id="Oval" fill="#24282D" cx="21.5" cy="22.5" r="8.5"></circle>
+                <rect id="Rectangle-5-Copy" fill="#24282D" x="37" y="54" width="116" height="29" rx="8"></rect>
+                <circle id="Oval-Copy" fill="#24282D" cx="21.5" cy="62.5" r="8.5"></circle>
+                <rect id="Rectangle-5-Copy-4" fill="#24282D" x="37" y="94" width="116" height="29" rx="8"></rect>
+                <circle id="Oval-Copy-3" fill="#24282D" cx="21.5" cy="102.5" r="8.5"></circle>
+                <rect id="Rectangle-5-Copy-3" fill="#BB0028" x="163" y="28" width="59" height="30" rx="8"></rect>
+                <polygon id="+" fill="#BB0028" points="193 92.9703349 193 90.0200806 197.011658 90.0200806 197.011658 86 199.970335 86 199.970335 90.0200806 203.992615 90.0200806 203.992615 92.9703349 199.970335 92.9703349 199.970335 97.0081177 197.011658 97.0081177 197.011658 92.9703349"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

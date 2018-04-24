@@ -227,3 +227,18 @@
 .button.pbr_go_to_chapter_list__chapter_button:hover{
     color: #d4002d;
 }
+
+.select_version {
+    display: flex;
+}
+
+.select_version__versions {
+    width: 33%;
+    background: #fff;
+    margin: 15px;
+    padding: 15px;
+}
+
+.select_version__create_form {
+    text-align: center;
+}

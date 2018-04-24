@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="233px" height="141px" viewBox="0 0 233 141" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Major</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="233" height="141"></rect>
+    </defs>
+    <g id="2.1---1.0.1---Type" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-372.000000, -410.000000)">
+        <g id="Major" transform="translate(349.000000, 322.000000)">
+            <g transform="translate(23.000000, 88.000000)">
+                <g id="Rectangle-4">
+                    <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <rect stroke="#979797" stroke-width="1" x="0.5" y="0.5" width="232" height="140"></rect>
+                </g>
+                <rect id="Rectangle-5" fill="#24282D" x="37" y="14" width="120" height="29" rx="8"></rect>
+                <circle id="Oval" fill="#24282D" cx="21.5" cy="22.5" r="8.5"></circle>
+                <rect id="Rectangle-5-Copy" fill="#24282D" x="37" y="54" width="120" height="29" rx="8"></rect>
+                <circle id="Oval-Copy" fill="#24282D" cx="21.5" cy="62.5" r="8.5"></circle>
+                <rect id="Rectangle-5-Copy-2" fill="#24282D" x="37" y="94" width="120" height="29" rx="8"></rect>
+                <circle id="Oval-Copy-2" fill="#24282D" cx="21.5" cy="102.5" r="8.5"></circle>
+                <g id="Group" transform="translate(149.000000, 19.000000)">
+                    <polygon id="Triangle" fill="#BB0028" points="0 9 18 0 18 18"></polygon>
+                    <path d="M13.6687629,95.613194 C78.5744574,95.613194 76.1348919,9.31258721 17.2280864,9.31258721" id="Path-2" stroke="#BB0028" stroke-width="6"></path>
+                </g>
+                <g id="Group-Copy" transform="translate(79.000000, 94.000000) rotate(-180.000000) translate(-79.000000, -94.000000) translate(62.000000, 64.000000)">
+                    <polygon id="Triangle" fill="#BB0028" points="0 9 18 0 18 18"></polygon>
+                    <path d="M15.8790617,59.613194 C40.1125249,59.613194 39.2016784,9 17.2079857,9" id="Path-2" stroke="#BB0028" stroke-width="6"></path>
+                </g>
+                <g id="Group-Copy-2" transform="translate(108.000000, 51.000000) rotate(-540.000000) translate(-108.000000, -51.000000) translate(91.000000, 21.000000)">
+                    <polygon id="Triangle" fill="#BB0028" points="0 9 18 0 18 18"></polygon>
+                    <path d="M15.8790617,59.613194 C40.1125249,59.613194 39.2016784,9 17.2079857,9" id="Path-2" stroke="#BB0028" stroke-width="6"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

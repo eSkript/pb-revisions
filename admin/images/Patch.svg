@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="233px" height="141px" viewBox="0 0 233 141" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Patch</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="233" height="141"></rect>
+    </defs>
+    <g id="2.1---1.0.1---Type" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1012.000000, -410.000000)">
+        <g id="Patch" transform="translate(989.000000, 322.000000)">
+            <g transform="translate(23.000000, 88.000000)">
+                <g id="Rectangle-4">
+                    <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <rect stroke="#979797" stroke-width="1" x="0.5" y="0.5" width="232" height="140"></rect>
+                </g>
+                <rect id="Rectangle-5" fill="#24282D" x="37" y="14" width="187" height="29" rx="8"></rect>
+                <circle id="Oval" fill="#24282D" cx="21.5" cy="22.5" r="8.5"></circle>
+                <rect id="Rectangle-5-Copy" fill="#24282D" x="37" y="54" width="187" height="29" rx="8"></rect>
+                <circle id="Oval-Copy" fill="#24282D" cx="21.5" cy="62.5" r="8.5"></circle>
+                <rect id="Rectangle-5-Copy-2" fill="#24282D" x="37" y="94" width="187" height="29" rx="8"></rect>
+                <circle id="Oval-Copy-2" fill="#24282D" cx="21.5" cy="102.5" r="8.5"></circle>
+                <rect id="Rectangle-6" fill="#BB0028" x="157" y="68" width="35" height="12" rx="6"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
