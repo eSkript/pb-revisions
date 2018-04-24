@@ -245,3 +245,17 @@
     text-align: center;
     margin-top: auto;
 }
+
+.pb_revisions_button_list {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    padding: 15px;
+    padding-bottom: 4px;
+}
+
+.button.pb_revisions_button_list__button {
+    display: block;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
