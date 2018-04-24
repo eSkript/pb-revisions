@@ -249,13 +249,16 @@
 .pb_revisions_button_list {
     display: flex;
     flex-direction: column;
-    background: #fff;
-    padding: 15px;
-    padding-bottom: 4px;
+    margin-top: 15px;
 }
 
 .button.pb_revisions_button_list__button {
     display: block;
     margin-right: auto;
     margin-bottom: 15px;
+}
+
+.pb_revisions_dialog {
+    background-color: #fff;
+    padding: 15px;
 }

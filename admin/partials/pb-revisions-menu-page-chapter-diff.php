@@ -46,7 +46,7 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 		</div>
 		<div class="pdr-footer__grow"></div>
 		<div>
-			<h1><?php printf(__('Chapter: %s', 'pb-revisions'), esc_html($data['chapter']->title()));?></h1>
+			<h1><?php esc_html_e($data['chapter']->title());?></h1>
 		</div>
 		<div class="pdr-footer__grow"></div>
 		<div class="pbr-header__align-center">
