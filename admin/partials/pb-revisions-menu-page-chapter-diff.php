@@ -35,8 +35,23 @@ function mce_before_init_pb_diff( $init_array ) {
 
 $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->is_added(), $data['chapter']->is_deleted(), $data['chapter']->comments, "pb_revisions_comments", $settings);
 ?>
+<form action="<?php echo esc_url($form_url) ?>" method="POST">
+<div class="pbr-header">
+	<div class="pbr-header__content">
+		<div class="pbr-header__left">
+			<button type="submit" formaction="<?php echo esc_url($summary_url) ?>" class="button" name="pb_revisions_action" value="save_chapter">
+				<?php _e('To Summary', 'pb-revisions');?>
+			</button>
+		</div>
+		<div class="pbr-header__center">
+			<h1><?php printf(__('Chapter: %s', 'pb-revisions'), esc_html($data['chapter']->title()));?></h1>
+		</div>
+		<div class="pbr-header__right">
+			<button type="submit" class="button" name="pb_revisions_action" value="save_chapter"><?php _e('Save and Exit', 'pb-revisions');?></button>
+		</div>
+	</div>
+</div>
 <div class="wrap">
-	<form action="<?php echo esc_url($form_url) ?>" method="POST">
 		<input type="hidden" name="pb_revisions_chapter" value="<?php echo esc_attr($data['chapter']->chapter)?>">
 		<input type="hidden" name="pb_revisions_version" value="<?php echo esc_attr($data['chapter']->version->ID)?>">
 		<?php if(!$data['chapter']->anything_changed()){?>
@@ -63,7 +78,7 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 			</div>
 		<?php } ?>
 		
-		<h1><?php printf(__('Chapter: %s', 'pb-revisions'), esc_html($data['chapter']->title()));?></h1>
+		
 
 		<table class="wp-list-table widefat fixed<?php
 						if($data['chapter']->is_added()) echo " pb_rev_diff_table__added";
@@ -143,18 +158,33 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 			</tbody>
 		</table>
 
-		<?php if($has_prev){?>
-			<button type="submit" formaction="<?php echo esc_url($prev_url) ?>" class="button button-hero" name="pb_revisions_action" value="save_chapter">
-					<?php _e('Previous', 'pb-revisions');?>
-			</button>
-		<?php } ?>
-		<button type="submit" formaction="<?php echo esc_url($summary_url) ?>" class="button button-hero <?php echo !$has_next ? 'button-primary' : ''?>" name="pb_revisions_action" value="save_chapter">
-			<?php _e('To Summary', 'pb-revisions');?>
-		</button>
-		<?php if($has_next){?>
-			<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button button-hero <?php echo $data['chapter']->anything_changed() ? 'button-primary' : ''?>" name="pb_revisions_action" value="save_chapter">
-					<?php _e('Next', 'pb-revisions');?>
-			</button>
-		<?php } ?>
-	</form>
+		
+		
+		
+
 </div>
+
+<div class="pbr-footer">
+	<div class="pbr-footer__content">
+		<div class="pbr-footer__left">
+			<?php if($has_prev){?>
+				<button type="submit" formaction="<?php echo esc_url($prev_url) ?>" class="button" name="pb_revisions_action" value="save_chapter">
+						<?php _e('Previous', 'pb-revisions');?>
+				</button>
+			<?php } ?>
+		</div>
+		<div class="pbr-footer__right">
+			<?php if($has_next){?>
+				<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button <?php echo $data['chapter']->anything_changed() ? 'button-primary' : ''?>" name="pb_revisions_action" value="save_chapter">
+						<?php _e('Next', 'pb-revisions');?>
+				</button>
+			<?php } else { ?>
+				<button type="submit" formaction="<?php echo esc_url($summary_url) ?>" class="button button-primary" name="pb_revisions_action" value="save_chapter">
+					<?php _e('To Summary', 'pb-revisions');?>
+				</button>
+			<?php } ?>
+		</div>
+	</div>
+</div>
+
+</form>
