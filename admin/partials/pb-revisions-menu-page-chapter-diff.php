@@ -64,9 +64,10 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 					<?php _e("This chapter doesn't have any changes compared to the last version but does have change comments.
 					We recomend you to delete the comments.", 'pb-revisions');?>
 				</p>
-				<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button button-hero button-primary" name="pb_revisions_action" value="delete_chapter">
+				<button type="submit" formaction="<?php echo esc_url($next_url) ?>" class="button button-hero button-primary right" name="pb_revisions_action" value="delete_chapter">
 					<?php _e('Delete the comments!', 'pb-revisions');?>
 				</button>
+				<p class="clear"></p>
 			</div>
 		<?php } ?>
 		<?php if($data['chapter']->contend_new_changed_since_draft() && $data['chapter']->anything_changed()){?>
@@ -75,9 +76,10 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 				<p>
 					<?php _e('This chapter has changed since you last edited the comments of it. The comments might be outdated. Please check them.', 'pb-revisions');?>
 				</p>
-				<button type="submit" formaction="<?php echo esc_url($chapter_url) ?>" class="button" name="pb_revisions_action" value="force_save_chapter">
+				<button type="submit" formaction="<?php echo esc_url($chapter_url) ?>" class="button right" name="pb_revisions_action" value="force_save_chapter">
 					<?php _e('Discard', 'pb-revisions');?>
 				</button>
+				<p class="clear"></p>
 			</div>
 		<?php } ?>
 		
