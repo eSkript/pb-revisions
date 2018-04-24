@@ -191,9 +191,12 @@ class Version {
         $split_n = explode(".", $number);
 
         if("major" == $type){
-            $split_n[0] = 1+(int)$split_n[0];
+			$split_n[0] = 1+(int)$split_n[0];
+			$split_n[1] = 0;
+			$split_n[2] = 0;
         }else if("minor" == $type){
-            $split_n[1] = 1+(int)$split_n[1];
+			$split_n[1] = 1+(int)$split_n[1];
+			$split_n[2] = 0;
         }else if("patch" == $type){
             $split_n[2] = 1+(int)$split_n[2];
         }else{
