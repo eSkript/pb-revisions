@@ -111,6 +111,29 @@ class Pb_Revisions_Admin {
 	}
 
 	/**
+	 * Reorder Menu
+	 *
+	 * @since    1.0.0
+	 */
+	public function reorder_admin_menu($menu_order){
+		if ($key = array_search ( 'pb_export' , $menu_order )){
+			$menu_order2 = array_splice($menu_order, $key);
+			$menu_order[] = "pb_revisions";
+			$menu_order = array_merge($menu_order, $menu_order2);
+		}
+		return $menu_order;
+	}
+
+	/**
+	 * Return True
+	 *
+	 * @since    1.0.0
+	 */
+	public function return_true(){
+		return true;
+	}
+
+	/**
 	 * Render the admin menu
 	 *
 	 * @since    1.0.0

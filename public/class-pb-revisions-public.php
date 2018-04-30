@@ -156,13 +156,13 @@ class Pb_Revisions_Public {
 	 * 
 	 * @since    1.0.0
      */
-    public function change_show_working_version(){ 
+    public function change_show_working_version($wp_query){ 
         if(is_user_logged_in()){
-            if(get_query_var('pb_revisions_show_working_version', false )){
+            if(isset($wp_query->query['pb_revisions_show_working_version'])){
 				update_user_meta(get_current_user_id(), "pb_revisions_show_working_version", true);
 				$this->switch_to_right_table_names();
             }
-            if(get_query_var('pb_revisions_hide_working_version', false )){
+            if(isset($wp_query->query['pb_revisions_hide_working_version'])){
 				update_user_meta(get_current_user_id(), "pb_revisions_show_working_version", false);
 				$this->switch_to_right_table_names();
             }
