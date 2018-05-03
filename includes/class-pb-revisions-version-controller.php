@@ -99,12 +99,12 @@ class Version_Controller {
 	 */
 	public static function can_user_see_working_version(){
 		global $post;
-		return (current_user_can( "edit_posts" ) || 
+		return (is_user_logged_in() && (current_user_can( "edit_posts" ) || 
 					( 
 					 isset($post) &&
 					 current_user_can('edit_post', $post->ID)
 					)
-				);
+				));
 	}
 
 	/**
