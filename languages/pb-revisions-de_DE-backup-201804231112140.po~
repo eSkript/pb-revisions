@@ -323,7 +323,7 @@ msgid "Deactivate"
 msgstr "Deaktivieren"
 
 #: public/class-pb-revisions-public.php:96
-msgid "You currently see a preview. Your readers see an other version."
+msgid "You currently see a preview. Your readers see another version."
 msgstr ""
 "Sie sehen im Moment eine Vorschau. Ihre Leser sehen eine andere Version."
 

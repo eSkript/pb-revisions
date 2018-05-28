@@ -290,7 +290,7 @@ msgid "Deactivate"
 msgstr ""
 
 #: public/class-pb-revisions-public.php:96
-msgid "You currently see a preview. Your readers see an other version."
+msgid "You currently see a preview. Your readers see another version."
 msgstr ""
 
 #: public/partials/revisions-shortcode.php:18

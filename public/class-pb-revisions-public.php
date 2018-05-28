@@ -93,7 +93,7 @@ class Pb_Revisions_Public {
 				'_showPreview' => __('Show Preview', 'pb-revisions'),
 				'_deactivatePreview' => __('Deactivate Preview', 'pb-revisions'),
 				'_deactivate' => __('Deactivate', 'pb-revisions'),
-				'_previewNotice' => __('You currently see a preview. Your readers see an other version.', 'pb-revisions'),
+				'_previewNotice' => __('You currently see a preview. Your readers see another version.', 'pb-revisions'),
                 'is_on' => get_user_meta( get_current_user_id(), "pb_revisions_show_working_version", true ) || get_query_var("preview", false),
                 'hide_url' => esc_url(add_query_arg( array(
                     'pb_revisions_hide_working_version' => true,
