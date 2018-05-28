@@ -199,4 +199,62 @@ class Pb_Revisions_Admin {
 		return false;
 	}
 
+	/**
+	 * Removes wp_admin_bar_edit_menu view links and replaces them with previewlinks
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @param WP_Admin_Bar $wp_admin_bar
+	 */
+	public function admin_bar_edit_menu_replace( $wp_admin_bar ){
+		if ( is_admin() ) {
+			$current_screen = get_current_screen();
+			$post           = get_post();
+	
+			if ( 'post' == $current_screen->base
+				&& 'add' != $current_screen->action
+				&& ( $post_type_object = get_post_type_object( $post->post_type ) )
+				&& current_user_can( 'read_post', $post->ID )
+				&& ( $post_type_object->public )
+				&& ( $post_type_object->show_in_admin_bar ) ) {
+				if ( 'draft' != $post->post_status ) {
+					$wp_admin_bar->remove_menu('view');
+					$preview_link = get_preview_post_link( $post );
+					$wp_admin_bar->add_menu(
+						array(
+							'id'    => 'preview',
+							'title' => $post_type_object->labels->view_item,
+							'href'  => esc_url( $preview_link ),
+							'meta'  => array( 'target' => 'wp-preview-' . $post->ID ),
+						)
+					);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Replace Post Type messages with Previewlink
+	 * 
+	 * \Pressbooks\PostType\post_type_messages
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @param Array $messages
+	 */
+
+	public function post_type_messages_replace($messages){
+		global $post;
+
+		$permalink = esc_url(get_permalink( $post ));
+		$permalinkPreview = esc_url(get_preview_post_link( $post ));
+
+		return  array_map(
+			function($arr) use ($permalink, $permalinkPreview) {
+				return str_replace($permalink, $permalinkPreview, $arr);
+			},
+			$messages
+		);
+	}
+
 }

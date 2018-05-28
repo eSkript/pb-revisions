@@ -162,6 +162,8 @@ class Pb_Revisions {
 		$this->loader->add_filter( 'pb_export_show_files', $plugin_admin, 'pb_export_show_files' );
 		$this->loader->add_filter( 'menu_order', $plugin_admin, 'reorder_admin_menu', 11 );
 		$this->loader->add_filter( 'custom_menu_order', $plugin_admin, 'return_true' );
+		$this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'admin_bar_edit_menu_replace', 81 );
+		$this->loader->add_action( 'post_updated_messages', $plugin_admin, 'post_type_messages_replace', 11 );
 	}
 
 	/**
