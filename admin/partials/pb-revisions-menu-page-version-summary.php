@@ -24,7 +24,7 @@ $settings = array(
 		<div class="pbr-header__align-center">
 			<button type="submit" class="button<?php echo !$draft ? ' button-primary' :'' ?>" name="pb_revisions_action" value="save_version"><?php _e('Save and Exit', 'pb-revisions');?></button>
 			<?php if($draft){?>
-				<button type="submit" class="button button-primary" name="pb_revisions_action" value="publish_version"  onclick="if ( !confirm('<?php esc_attr_e( 'Are you sure you want to publish this version? There is no way back!', 'pb_revisions' ); ?>' ) ) { return false }"><?php _e('Publish', 'pb-revisions');?></button>
+				<button type="submit" class="button button-primary" name="pb_revisions_action" value="publish_version"  onclick="if ( !confirm('<?php esc_attr_e( 'Are you sure you want to publish this version? There is no way back!', 'pb-revisions' ); ?>' ) ) { return false }"><?php _e('Publish', 'pb-revisions');?></button>
 			<?php } ?>
 		</div>
 	</div>

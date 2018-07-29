@@ -45,7 +45,7 @@ $date_format = get_option( 'date_format' );
 					<?php }?>
 					<?php if($version->draft) {?>
 						<form class="inline_form" action="<?php echo esc_url($form_url) ?>" method="POST">
-							<button type="submit" class="button generate" name="pb_revisions_action" value="delete_draft" onclick="if ( !confirm('<?php esc_attr_e( 'Are you sure you want to delete this?', 'pressbooks' ); ?>' ) ) { return false }"><?php _e('Delete', 'pb-revisions');?></button>
+							<button type="submit" class="button generate" name="pb_revisions_action" value="delete_draft" onclick="if ( !confirm('<?php esc_attr_e( 'Are you sure you want to delete this?', 'pb-revisions' ); ?>' ) ) { return false }"><?php _e('Delete', 'pb-revisions');?></button>
 						</form>
 					<?php }?>
 				</td>
