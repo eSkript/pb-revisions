@@ -371,9 +371,9 @@ class Store {
 		return array_map(function($c) use ($version){
 			$out = new \PBRevisions\includes\models\Chapter($version, $c->ID, $c->chapter);
 			if(!empty($version->prev_number)){
-				$out->set_old_values($c->post_content_old, $c->post_title_old, $c->post_status_old, $c->pb_export_old=="on", $c->menu_order_old, $c->post_type_old);
+				$out->set_old_values($c->post_content_old, $c->post_title_old, $c->post_status_old, $c->menu_order_old, $c->post_type_old);
 			}
-			$out->set_new_values($c->post_content_new, $c->post_title_new, $c->post_status_new, $c->pb_export_new=="on", $c->menu_order_new, $c->post_type_new);
+			$out->set_new_values($c->post_content_new, $c->post_title_new, $c->post_status_new, $c->menu_order_new, $c->post_type_new);
 			$out->set_comments($c->title_comment, unserialize($c->comments), $c->content_draft_hash);
 			return $out;
 		}, $chapters);
@@ -433,8 +433,8 @@ class Store {
 			return false;
 		}
 		$out = new \PBRevisions\includes\models\Chapter($version, $c->ID, $c->chapter);
-		$out->set_old_values($c->post_content_old, $c->post_title_old, $c->post_status_old, $c->pb_export_old=="on", $c->menu_order_old, $c->post_type_old);
-		$out->set_new_values($c->post_content_new, $c->post_title_new, $c->post_status_new, $c->pb_export_new=="on", $c->menu_order_new, $c->post_type_new);
+		$out->set_old_values($c->post_content_old, $c->post_title_old, $c->post_status_old, $c->menu_order_old, $c->post_type_old);
+		$out->set_new_values($c->post_content_new, $c->post_title_new, $c->post_status_new, $c->menu_order_new, $c->post_type_new);
 		$out->set_comments($c->title_comment, unserialize($c->comments), $c->content_draft_hash);
 		$out->set_neighbors($prev, $next);
 		return $out;
@@ -477,9 +477,9 @@ class Store {
 		return array_map(function($c) use ($version){
 			$out = new \PBRevisions\includes\models\Chapter($version, $c->ID, $c->chapter);
 			if(!empty($version->prev_number)){
-				$out->set_old_values($c->post_content_old, $c->post_title_old, $c->post_status_old, $c->pb_export_old=="on", $c->menu_order_old, $c->post_type_old);
+				$out->set_old_values($c->post_content_old, $c->post_title_old, $c->post_status_old, $c->menu_order_old, $c->post_type_old);
 			}
-			$out->set_new_values($c->post_content_new, $c->post_title_new, $c->post_status_new, $c->pb_export_new=="on", $c->menu_order_new, $c->post_type_new);
+			$out->set_new_values($c->post_content_new, $c->post_title_new, $c->post_status_new, $c->menu_order_new, $c->post_type_new);
 			$out->set_comments($c->title_comment, unserialize($c->comments), $c->content_draft_hash);
 			return $out;
 		}, $chapters);

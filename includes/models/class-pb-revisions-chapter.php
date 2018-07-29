@@ -96,24 +96,6 @@ class Chapter {
 	public $status_new;
 
 	/**
-	 * The chapter export status of the last version
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 * @var      boolean    $export_status_old    The chapter export status of the last version
-	 */
-	public $export_status_old;
-
-	/**
-	 * The chapter export status of the new version
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 * @var      boolean    $export_status_new    The chapter export status of the new version
-	 */
-	public $export_status_new;
-
-	/**
 	 * The chapter order of the last version
 	 *
 	 * @since    1.0.0
@@ -217,15 +199,13 @@ class Chapter {
 	 * @param      string	$content			The chapter content
 	 * @param      string	$title				The chapter title
 	 * @param      string	$status				The chapter status
-	 * @param      boolean	$export_status		The chapter export status
 	 * @param      int		$order				The chapter menu order
 	 * @param      string	$type				The chapter type
 	 */
-	public function set_old_values($content, $title, $status, $export_status, $order, $type) {
+	public function set_old_values($content, $title, $status, $order, $type) {
 		$this->content_old = $content;
 		$this->title_old = $title;
 		$this->status_old = $status;
-		$this->export_status_old = $export_status;
 		$this->order_old = $order;
 		$this->type_old = $type;
 	}
@@ -238,15 +218,13 @@ class Chapter {
 	 * @param      string	$content			The chapter content
 	 * @param      string	$title				The chapter title
 	 * @param      string	$status				The chapter status
-	 * @param      boolean	$export_status		The chapter export status
 	 * @param      int		$order				The chapter menu order
 	 * @param      string	$type				The chapter type
 	 */
-	public function set_new_values($content, $title, $status, $export_status, $order, $type) {
+	public function set_new_values($content, $title, $status, $order, $type) {
 		$this->content_new = $content;
 		$this->title_new = $title;
 		$this->status_new = $status;
-		$this->export_status_new = $export_status;
 		$this->order_new = $order;
 		$this->type_new = $type;
 	}
@@ -287,7 +265,7 @@ class Chapter {
 	 * @return	 boolean
 	 */
 	public function web_statuts_old(){
-		return $this->status_old == "publish";
+		return $this->status_old == "publish" || $this->status_old == "web-only";
 	}
 
 	/**
@@ -298,7 +276,29 @@ class Chapter {
 	 * @return	 boolean
 	 */
 	public function web_statuts_new(){
-		return $this->status_new == "publish";
+		return $this->status_new == "publish" || $this->status_new == "web-only";
+	}
+
+	/**
+	 * Old visilbe in the export?
+	 *
+	 * @since    1.1.0
+	 * @access   public
+	 * @return	 boolean
+	 */
+	public function export_status_old(){
+		return $this->status_old == "publish" || $this->status_old == "private";
+	}
+
+	/**
+	 * New visilbe in the export?
+	 *
+	 * @since    1.1.0
+	 * @access   public
+	 * @return	 boolean
+	 */
+	public function export_status_new(){
+		return $this->status_new == "publish" || $this->status_new == "private";
 	}
 
 	/**
@@ -309,7 +309,7 @@ class Chapter {
 	 * @return	 boolean
 	 */
 	public function is_added(){
-		return is_null($this->status_old) || (!$this->web_statuts_old() && !$this->export_status_old);
+		return is_null($this->status_old) || (!$this->web_statuts_old() && !$this->export_status_old());
 	}
 
 	/**
@@ -320,7 +320,7 @@ class Chapter {
 	 * @return	 boolean
 	 */
 	public function is_deleted(){
-		return is_null($this->status_new) || (!$this->web_statuts_new() && !$this->export_status_new);
+		return is_null($this->status_new) || (!$this->web_statuts_new() && !$this->export_status_new());
 	}
 
 	/**
@@ -375,7 +375,7 @@ class Chapter {
 	 * @return	 boolean
 	 */
 	public function export_status_changed(){
-		return $this->export_status_old != $this->export_status_new;
+		return $this->export_status_old() != $this->export_status_new();
 	}
 
 	/**
@@ -420,7 +420,7 @@ class Chapter {
 	 * @return	 string
 	 */
 	public function contend_new_hash(){
-		return hash("md5", $this->content_new.'---'.$this->title_new.'---'.$this->status_new.'---'.($this->export_status_new ? "true" : "false"));
+		return hash("md5", $this->content_new.'---'.$this->title_new.'---'.$this->status_new.'---'.($this->export_status_new() ? "true" : "false"));
 	}
 
 	/**

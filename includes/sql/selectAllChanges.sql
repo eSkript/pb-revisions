@@ -26,13 +26,11 @@ FROM
                 post_status_new,
                 menu_order_new,
                 post_type_new,
-                pb_export_new,
                 post_content_old,
                 post_title_old,
                 post_status_old,
                 menu_order_old,
                 post_type_old,
-                pb_export_old,
                 post_parent
 
             FROM
@@ -44,29 +42,23 @@ FROM
                         new.post_status AS post_status_new, 
                         new.menu_order AS menu_order_new,  
                         new.post_type AS post_type_new, 
-                        new.pb_export AS pb_export_new, 
                         old.post_content AS post_content_old, 
                         old.post_title AS post_title_old, 
                         old.post_status AS post_status_old, 
                         old.menu_order AS menu_order_old,  
                         old.post_type AS post_type_old, 
-                        old.pb_export AS pb_export_old,
                         COALESCE(new.post_parent, old.post_parent) AS post_parent
                     FROM
                         (
-                            SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type, m.meta_value AS pb_export
+                            SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type
                             FROM {$posts} AS p
-                            LEFT JOIN {$postmeta} AS m
-                            ON p.ID = m.post_id AND m.meta_key = 'pb_export'
-                            WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private")
+                            WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private,web-only")
                         ) AS new
                     LEFT JOIN
                         (
-                            SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type, m.meta_value AS pb_export
+                            SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type
                             FROM {$posts_prev} AS p
-                            LEFT JOIN {$postmeta_prev} AS m
-                            ON p.ID = m.post_id AND m.meta_key = 'pb_export'
-                            WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private")
+                            WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private,web-only")
                         )AS old
                     USING (ID)
 
@@ -78,30 +70,24 @@ FROM
                         new.post_title AS post_title_new, 
                         new.post_status AS post_status_new, 
                         new.menu_order AS menu_order_new,  
-                        new.post_type AS post_type_new, 
-                        new.pb_export AS pb_export_new, 
+                        new.post_type AS post_type_new,  
                         old.post_content AS post_content_old, 
                         old.post_title AS post_title_old, 
                         old.post_status AS post_status_old, 
                         old.menu_order AS menu_order_old,  
                         old.post_type AS post_type_old, 
-                        old.pb_export AS pb_export_old,
                         COALESCE(new.post_parent, old.post_parent) AS post_parent
                     FROM
                         (
-                            SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type, m.meta_value AS pb_export
+                            SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type
                             FROM {$posts} AS p
-                            LEFT JOIN {$postmeta} AS m
-                            ON p.ID = m.post_id AND m.meta_key = 'pb_export'
-                            WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private")
+                            WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private,web-only")
                         ) AS new
                     RIGHT JOIN
                         (
-                            SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type, m.meta_value AS pb_export
+                            SELECT p.ID AS ID, p.post_content, p.post_title, p.post_status, p.menu_order, p.post_parent, p.post_type
                             FROM {$posts_prev} AS p
-                            LEFT JOIN {$postmeta_prev} AS m
-                            ON p.ID = m.post_id AND m.meta_key = 'pb_export'
-                            WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private")
+                            WHERE FIND_IN_SET(post_type, "front-matter,chapter,back-matter") AND FIND_IN_SET(post_status, "publish,private,web-only")
                         )AS old
                     USING (ID)
                 )AS cont
@@ -123,8 +109,6 @@ FROM
                 OR post_status_new != post_status_old
                 OR (post_status_new IS NULL AND post_status_new IS NOT NULL)
                 OR (post_status_new IS NOT NULL AND post_status_new IS NULL)
-                OR (pb_export_new = 'on' AND pb_export_old != 'on')
-                OR (pb_export_new != 'on' AND pb_export_old = 'on')
         ) as chapter
     LEFT JOIN
         (

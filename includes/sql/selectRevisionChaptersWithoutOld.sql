@@ -16,13 +16,10 @@ FROM
             p.menu_order AS menu_order_new,
             p.post_parent AS post_parent_new,
             p.post_type AS post_type_new,
-            m.meta_value AS pb_export_new,
             p.post_parent AS post_parent
         FROM {$pb_revisions_chapter} AS c
         LEFT JOIN {$posts} AS p
         ON c.chapter = p.ID
-        LEFT JOIN {$postmeta} AS m
-        ON c.chapter = m.post_id AND m.meta_key LIKE 'pb_export'
         WHERE c.version = %d
     ) as chapter
 LEFT JOIN

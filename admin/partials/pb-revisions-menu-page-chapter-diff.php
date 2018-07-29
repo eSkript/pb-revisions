@@ -138,7 +138,7 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 					<td class="pb_rev_diff_cell">
 						<span class="dashicons dashicons-migrate"></span><?php _e('Export:', 'pb-revisions');?> 
 						<?php if(!$data['chapter']->is_added()){?>
-							<?php if($data['chapter']->export_status_old){?>
+							<?php if($data['chapter']->export_status_old()){?>
 								<span class="dashicons dashicons-yes"></span>
 							<?php } else { ?>
 								<span class="dashicons dashicons-no"></span>
@@ -146,12 +146,12 @@ $text_diff = new \PBRevisions\includes\view_helper\Text_Diff($data['chapter']->i
 						<?php } ?>
 					</td>
 					<td class="pb_rev_diff_cell <?php
-						if($data['chapter']->export_status_changed() && $data['chapter']->export_status_new) echo "pb_rev_diff_cell__added";
-						if($data['chapter']->export_status_changed() && !$data['chapter']->export_status_new) echo "pb_rev_diff_cell__removed";
+						if($data['chapter']->export_status_changed() && $data['chapter']->export_status_new()) echo "pb_rev_diff_cell__added";
+						if($data['chapter']->export_status_changed() && !$data['chapter']->export_status_new()) echo "pb_rev_diff_cell__removed";
 					?>">
 						<span class="dashicons dashicons-migrate"></span><?php _e('Export:', 'pb-revisions');?>
 						<?php if(!$data['chapter']->is_deleted()){?>
-							<?php if($data['chapter']->export_status_new){?>
+							<?php if($data['chapter']->export_status_new()){?>
 								<span class="dashicons dashicons-yes"></span>
 							<?php } else { ?>
 								<span class="dashicons dashicons-no"></span>
