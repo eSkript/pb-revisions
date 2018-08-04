@@ -103,7 +103,7 @@ class Pb_Revisions_Activator {
 	 * @param	 int	$blog_id	The blog id of the new blog
 	 */
 	public static function activate_new_blog($blog_id){
-		if (is_plugin_active_for_network('pb-revisions/pb-revisions.php')) {
+		if (is_plugin_active_for_network('pressbooks-revisions/pressbooks-revisions.php')) {
 			switch_to_blog( $blog_id );
 			self::activate_one();
 			restore_current_blog();
