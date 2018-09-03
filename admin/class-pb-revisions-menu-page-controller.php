@@ -121,13 +121,13 @@ class Menu_Page_Controller {
 		if(isset($_POST['pb_revisions_version'])){
 			if($_POST['pb_revisions_version'] == 'working'){
 				$this->store->save_active_export_version_number(null);
-				\Pressbooks\Book::deleteBookObjectCache();
+				//\Pressbooks\Book::deleteBookObjectCache();
 				return;
 			}
 			$version = $this->store->get_version((int)$_POST['pb_revisions_version']);
 			if(isset($version) && !$version->draft){
 				$this->store->save_active_export_version($version);
-				\Pressbooks\Book::deleteBookObjectCache();
+				//\Pressbooks\Book::deleteBookObjectCache();
 				return;
 			}
 		}

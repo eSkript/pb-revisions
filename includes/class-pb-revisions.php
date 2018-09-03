@@ -164,6 +164,7 @@ class Pb_Revisions {
 		$this->loader->add_filter( 'custom_menu_order', $plugin_admin, 'return_true' );
 		$this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'admin_bar_edit_menu_replace', 81 );
 		$this->loader->add_action( 'post_updated_messages', $plugin_admin, 'post_type_messages_replace', 11 );
+		$this->loader->add_action( 'init', $plugin_admin, 'delete_book_object_Cache', 11 );
 	}
 
 	/**

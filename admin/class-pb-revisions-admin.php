@@ -257,4 +257,19 @@ class Pb_Revisions_Admin {
 		);
 	}
 
+	/**
+	 * Delete The Book Object Cache if exporting within the init hook
+	 * 
+	 * \Pressbooks\PostType\delete_book_object_Cache
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+
+	public function delete_book_object_Cache(){
+		if(isset($_GET['export']) && $_GET['export'] == "yes" && isset($_POST['pb_revisions_version'])){
+			\Pressbooks\Book::deleteBookObjectCache();
+		}
+	}
+
 }
